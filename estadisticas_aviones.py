@@ -159,8 +159,8 @@ def promedio(aerolinea):
             Verificamos si no estamos en la primeara linea
             verificamos que la linea contenga la aerolinea que estamos evaluando
             """
-            cantidad += 1
             for pasajeros in avion[3]:
+                cantidad += 1
                 suma += pasajeros
 
     return suma/cantidad #promedio
@@ -171,6 +171,8 @@ for aerolinea in aerolineas_posibles:
     print("Promedio de pasajeros por dia en la aerolinea " + aerolinea + ": " + str(promedio(aerolinea)))
 
 #PUNTO 4
+
+print()
 
 valor = 0 #Mayor valor encontrado
 avion = 0 #Arreglo del avion que contiene al mayor valor
