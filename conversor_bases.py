@@ -15,20 +15,24 @@ num = num.split(".") #Separete the parts of the n
 
 total = 0
 
-auxNum = num[0]
-weight = len(auxNum)
-
-for number in auxNum:
-    weight -= 1
-    total += int(number)*(base**(weight))
-
-if len(num) == 2:
-    auxNum = num[1]
+if base != 10:
+    auxNum = num[0]
     weight = len(auxNum)
-    
-    for index in range(1,weight+1):
-        exponent = int("-"+str(index))
-        total += int(auxNum[index-1])*(base**(exponent))
+
+    for number in auxNum:
+            weight -= 1
+            total += int(number)*(base**(weight))
+
+        if len(num) == 2:
+            auxNum = num[1]
+            weight = len(auxNum)
+
+            for index in range(1,weight+1):
+                exponent = int("-"+str(index))
+                total += int(auxNum[index-1])*(base**(exponent))
+else: 
+    total = num
+
 
 print(total)
 numToBase = str(total).split(".")
