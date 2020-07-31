@@ -20,8 +20,8 @@ if base != 10:
     weight = len(auxNum)
 
     for number in auxNum:
-            weight -= 1
-            total += int(number)*(base**(weight))
+        weight -= 1
+        total += int(number)*(base**(weight))
 
         if len(num) == 2:
             auxNum = num[1]
