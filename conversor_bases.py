@@ -30,21 +30,28 @@ if len(num) == 2:
         exponent = int("-"+str(index))
         total += int(auxNum[index-1])*(base**(exponent))
 
-numToBase = ""
-if  (baseTo != 10):
+numToBase = total.split(".")
+
+numToBaseFirst = numToBase[0]
+
+numToBaseSecond = numToBase[1]
+
+def toBase(number, base):
+    total = ""
     while True:
-        total_aux = total
-        module = total % baseTo
-        total = total // baseTo
-        numToBase += str(module)
+        total_aux = number
+        module = number % base
+        number = number // base
+        total += str(module)
 
-        if (total_aux // baseTo ) < baseTo:
-            numToBase += str(total_aux // baseTo)
-            break
-
-    print("The number is: ", numToBase[::-1])
-
-else:
-    
+        if (total_aux // base ) < base:
+            total += str(total_aux // base)
+            return total[::-1]
+     
+if baseTo != 10:
+    print("The number is: ", toBase(numToBaseFirst, baseTo), ".", toBase(numToBaseSecond, base))
+elif baseTo > 10:
+    print("This program only work until base 10")
+else
     print("The number is: ", total)
-
+    
