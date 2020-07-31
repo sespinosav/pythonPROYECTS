@@ -31,8 +31,7 @@ if base != 10:
                 exponent = int("-"+str(index))
                 total += int(auxNum[index-1])*(base**(exponent))
 
-else:
-    num = total.split(".")
+
 
 if len(num) == 2:
     numToBaseFirst = num[0]
