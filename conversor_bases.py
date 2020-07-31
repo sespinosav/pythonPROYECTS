@@ -9,19 +9,25 @@ Example:
 """
 
 num = input("Give me a num: ")
+testAux = num
 base = int(input("Give me the base of number: "))
 baseTo = int(input("Give me the base to convert: "))
 num = num.split(".") #Separete the parts of the n
 
-total = 0
 
-if base != 10:
-    auxNum = num[0]
-    weight = len(auxNum)
+def to10Base(num, base, test="", comparate=""):
+    if test != "" and comparate != "":
+        num = str(comparate).split(".")
 
-    for number in auxNum:
-        weight -= 1
-        total += int(number)*(base**(weight))
+    total = 0
+
+    if base != 10:
+        auxNum = num[0]
+        weight = len(auxNum)
+
+        for number in auxNum:
+            weight -= 1
+            total += int(number)*(int(base)**(weight))
 
         if len(num) == 2:
             auxNum = num[1]
@@ -31,19 +37,30 @@ if base != 10:
                 exponent = int("-"+str(index))
                 total += int(auxNum[index-1])*(base**(exponent))
 
+        num = str(total).split(".")
 
+        if test != "" and comparate != "":
+            if len(num[0] + "." + num[1]) > 100:
+                return False
+            return float(num[0] + "." + num[1]) != float(test)
+    
+    return num
+
+num = to10Base(num=num,base=base)
 
 if len(num) == 2:
-    numToBaseFirst = num[0]
-    numToBaseSecond = num[1]
+    numToBaseFirst = int(num[0])
+    numToBaseSecond = int(num[1])
+    num = float(num[0] + "." + num[1])
+
 else:
-    numToBaseFirst = num[0]
+    numToBaseFirst = int(num[0])
+    num = int(num[0])
     numToBaseSecond = ""
 
+numToPrint = num
 
-print(total)
-
-def toBase(number, base):
+def toBaseFirst(number, base):
     if number == "":
         return ""
     
@@ -58,16 +75,39 @@ def toBase(number, base):
         if (total_aux // base ) < base:
             total += str(total_aux // base)
             return total[::-1]
-print(numToBaseFirst,numToBaseSecond)     
+
+def toBaseSecond(number, base, first, toBase):
+    data = []
+    auxNumber = float("0." + str(number))
+
+    totalFloat = auxNumber * base
+
+    total = first + "." + (str(totalFloat).split("."))[0]
+
+    while(((str(auxNumber).split("."))[1] != "0") and to10Base("", baseTo, testAux, total)):
+        totalFloat = auxNumber * base
+        data.append((str(totalFloat).split("."))[0])
+        auxNumber = float("0."+(str(totalFloat).split(".")[1]))
+
+        total = ""
+
+        for floatNumber in data:
+            total += floatNumber
+
+        total = first + "." + str(total)
+
+    return total
+
 if baseTo < 10 and baseTo != 10 and numToBaseSecond != "":
-    print("The number is:", toBase(numToBaseFirst, baseTo) +  "." + toBase(numToBaseSecond, baseTo))
+    first = toBaseFirst(numToBaseFirst, baseTo)
+    print("The number is:", toBaseSecond(numToBaseSecond, baseTo, first, base))
 
 elif baseTo > 10:
     print("This program only work until base 10")
 
 elif baseTo != 10:
-    print("The number is: ", toBase(numToBaseFirst,baseTo))
+    print("The number is: ", toBaseFirst(numToBaseFirst,baseTo))
 
 else:
-    print("The number is: ", num)
+    print("The number is: ", numToPrint)
     
