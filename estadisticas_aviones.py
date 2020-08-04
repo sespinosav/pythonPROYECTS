@@ -63,7 +63,7 @@ n = int(input("Ingrese el numero de vuelos: ")) #int() es un metodo que conviert
 #Recorremos un for n veces mientras llenamos los datos a la vez en la matriz aleotriamente
 
 for indice in range(n):
-    id_ = "Avión" + str(n+1) #convertimos el indice del avion a cadena de caracteres y luego lo sumamos con avión
+    id_ = "Avión" + str(indice+1) #convertimos el indice del avion a cadena de caracteres y luego lo sumamos con avión
     """
     Para tomar modelos y aerolineas aleatorias
     generamos un numero entre el limite inferior del indice del arreglo,
