@@ -12,12 +12,16 @@ keys.sort()
 
 result = ""
 
+aux_words = []
 for word in keys:
-    if keys.index(word) == 0:
-        result += word.capitalize() + ","
-    elif keys.index(word) == len(keys) - 1:
-        result += " " + word + "."
-    else:
-        result += " " + word + ","
+    if word not in result and word.capitalize() not in result:
+        if keys.index(word) == 0:
+            result += word.capitalize() + ","
+        elif keys.index(word) == len(keys) - 1:
+            result += " " + word + "."
+        else:
+            result += " " + word + ","
+
+    
     
 print(result)
