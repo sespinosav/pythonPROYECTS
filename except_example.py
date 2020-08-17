@@ -1,21 +1,20 @@
 def divide():
 
-
 	try:
- 		op1=(float(input("introduce el pirmer numero: ")))
+		op1 = (float(input("introduce el pirmer numero: ")))
 
- 		op2=(float(input("introduce el segundo numero: ")))
+		op2 = (float(input("introduce el segundo numero: ")))
 
- 		print("la diviion es: " + str(op1/op2))
+		print("la diviion es: " + str(op1/op2))
 
- 	except ValueError:
+	except ValueError:
 
- 		print("el valor introducido es erroneo")
+		print("el valor introducido es erroneo")
 
- 	except ZeroDivisionError:
+	except ZeroDivisionError:
 
- 		print("no se puede dividir entre cero") 
+		print("no se puede dividir entre cero")
 
- 	prin("calculo finalizado")
+	print("calculo finalizado")
 
- divide()
+divide()
