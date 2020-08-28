@@ -204,7 +204,9 @@ def toBaseSecond(number, base, first, toBase):
     index = 0 #position for first number diferent of 0 in the result
     for digit in total: 
         if digit != "0": # remove the zeros to the left
-            return total[index-1:]
+            if index != 0:
+                return total[index-1:]
+            return total
         index += 1
 
 """
