@@ -118,7 +118,7 @@ def formaMatrizAumentada(A,b):
         a.append(b)
     return Ab
 
-def sustiticionRegresiva(Ab, n):
+def sustitucionRegresiva(Ab, n):
     x = [0 for i in range(n)]
     x[n-1] = Ab[n-1][n] / Ab[n-1][n-1]
     for i in range(n-2, -1, -1):
@@ -163,6 +163,7 @@ def intercambioMarcas(marcas, columnaMayor, k):
 
     return marcas
 
+
 def pivoteoTotal(Ab, n, k, marcas):
     mayor = 0
     filaMayor = k
@@ -178,7 +179,7 @@ def pivoteoTotal(Ab, n, k, marcas):
         return 0
     else:
         if filaMayor != k:
-            Ab = intercambieFilas(Ab, filaMayor, k)
+            Ab = intercambioFilas(Ab, filaMayor, k)
         if columnaMayor != k:
             Ab = intercambioColumnas(Ab, columnaMayor, k)
             marcas = intercambioMarcas(marcas, columnaMayor, k)

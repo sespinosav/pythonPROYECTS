@@ -4,6 +4,6 @@ A = eval(input("Ingrese la matriz A: "))
 b = eval(input("Ingrese el arreglo b: "))
 
 Ab = eliminacion(A, b, len(A))
-x = sustiticionRegresiva(Ab, len(A))
+x = sustitucionRegresiva(Ab, len(A))
 
 print(x)
