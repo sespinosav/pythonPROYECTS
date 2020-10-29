@@ -109,7 +109,7 @@ def eliminacion(A, b, n):
         for i in range(k+1, n):
             multiplicador = Ab[i][k] / Ab[k][k]
             for j in range(k, n+1):
-                Ab[i][j] -= multiplicador * Ab[k][j]
+                Ab[i][j] -= (multiplicador * Ab[k][j])
     return Ab
 
 def formaMatrizAumentada(A,b):
@@ -121,11 +121,11 @@ def formaMatrizAumentada(A,b):
 def sustitucionRegresiva(Ab, n):
     x = [0 for i in range(n)]
     x[n-1] = Ab[n-1][n] / Ab[n-1][n-1]
-    for i in range(n-2, -1, -1):
+    for i in range(n-1, -1, -1):
         sumatoria = 0
         for p in range(i+1, n):
             sumatoria += Ab[i][p] * x[p]
-        x[i] = (Ab[i][n])/Ab[i][i]
+        x[i] = (Ab[i][n] -  sumatoria)/Ab[i][i]
     return x
 
 def intercambioFilas(Ab, filaMayor, k):
