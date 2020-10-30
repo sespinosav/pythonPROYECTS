@@ -18,32 +18,31 @@ else
     el metodo fracaso en niter iteracciones
 end if
 """
-
-from function import function as fun
 import math
 
-f = input("Ingrese la funcion f(x) (y = mx + b): ")
-g = input("Ingrese la funcion g(x) (x = mx + b): ")
+f = eval(input("Ingrese la funcion f: "))
+g = eval(input("Ingrese la funcion g: "))
 tole = float(input("Ingrese la tolerancia: "))
 xa = float(input("Ingrese xa: "))
 niter = float(input("Ingrese el numero maximo de iteracciones: "))
 
-f = fun(f)
-g = fun(g)
-fx = f.evaluate(xa)
+fx = f(xa)
 count = 0
+xn = xa
 
 err = tole + 1
 
-while (fx != 0) and (err > tolerance) and (count < niter):
-    xn = g.evaluate(xa)
-    fx = f.evaluate(xn)
-    err = math.fabs(xn - xa)
+while (fx != 0) and (err > tole) and (count < niter):
+    print(count,xn,f(xn),err)
+    xn = g(xa)
+    fx = f(xn)
+    err = abs((xn - xa)/xn)
     xa = xn
     count += 1
+
 if fx == 0:
     print("xa es raiz",xa)
 elif err < tole:
-    print("xa es aproximacion con una tolerancia:",xa)
+    print("xa: ",xa ,"es aproximacion con una tolerancia:",tole)
 else:
     print("El metodo fracaso en niter iteracciones",niter)

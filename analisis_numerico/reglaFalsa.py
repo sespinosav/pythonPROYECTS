@@ -1,5 +1,7 @@
 import math
 
+#xi,xs,tolerance,niter
+
 f = eval(input("Ingrese la funcion: "))
 xi = float(input("Ingrese xi: "))
 xs = float(input("Ingrese xs: "))
@@ -14,7 +16,7 @@ if fxi == 0:
 elif fxs == 0:
     print("xs es una raiz",xs)
 elif (fxi * fxs) < 0:
-    xm = (xi + xs) / 2
+    xm = (xi) - ((fxi*(xs-xi)) / (fxs-fxi))
     fxm = f(xm)
     count = 1
     error = tolerance + 1
@@ -27,9 +29,9 @@ elif (fxi * fxs) < 0:
             xi = xm
             fxi = fxm
         xaux = xm
-        xm = (xi + xs) / 2
+        xm = (xi) - ((fxi*(xs-xi)) / (fxs-fxi))
         fxm = f(xm)
-        error = abs((xm - xaux)/xm)
+        error = abs(xm - xaux)
         count += 1
     if fxm == 0:
         print("xm es rai",xm)

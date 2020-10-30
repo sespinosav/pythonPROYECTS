@@ -1,4 +1,3 @@
-from gaussiana import *
 import numpy as np
 
 xs = eval(input("Ingrese los x: "))
@@ -14,6 +13,5 @@ for i in xs:
 
 A = np.array(A)
 A = np.linalg.inv(A)
-b = np.array(b)
-x = np.dot(A,b)
-print(x)
+A = np.tolist(A)
+

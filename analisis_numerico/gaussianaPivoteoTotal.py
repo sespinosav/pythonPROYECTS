@@ -1,4 +1,4 @@
-from gaussiana import *
+from gaussiana import eliminacionGaussianaConPivoteo, sustitucionRegresiva
 
 A = eval(input("Ingrese la matriz A: "))
 b = eval(input("Ingrese el arreglo b: "))
