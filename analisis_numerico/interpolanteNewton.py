@@ -10,10 +10,8 @@ p.append(eval("lambda x: "+result))
 b.append((ys[1]-b[0])/(xs[1]-xs[0]))
 result += f"+{b[1]}*(x-{xs[0]})"
 p.append(eval("lambda x: "+result))
-print("lambda x: "+result)
 
 for n in range(2,len(ys)):
-    print(n)
     fun = p[n-1]
     den = 1
     coef = ""
