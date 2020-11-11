@@ -8,10 +8,20 @@ def eliminacion(A, b, n):
     return Ab
 
 def formaMatrizAumentada(A,b):
-    Ab = A
-    for a, b in zip(Ab, b):
+    for a, b in zip(A, b):
         a.append(b)
-    return Ab
+    return A
+
+def sustitucionProgresiva(Lb, n):
+    x = []
+    x.append(Lb[0][n] / Lb[0][0])
+    while len(x) < n:
+        r = 0
+        for i in range(len(x)):
+            r += Lb[len(x)][i]*x[i]
+        r = (Lb[len(x)][n] - r)/Lb[len(x)][len(x)]
+        x.append(r)
+    return x
 
 def sustitucionRegresiva(Ab, n):
     x = [0 for i in range(n)]
