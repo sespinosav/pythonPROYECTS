@@ -13,8 +13,7 @@ def formaMatrizAumentada(A,b):
     return A
 
 def sustitucionProgresiva(Lb, n):
-    x = []
-    x.append(Lb[0][n] / Lb[0][0])
+    x = [Lb[0][n] / Lb[0][0]]
     while len(x) < n:
         r = 0
         for i in range(len(x)):
@@ -47,25 +46,27 @@ def intercambioColumnas(Ab, columnaMayor, k):
         Ab[i][columnaMayor] = columAux[i]
     return Ab
 
-def pivoteoParcial(Ab, n, k):
+def pivoteoParcial(Ab, n, k, lu=False):
     mayor = abs(Ab[k][k])
     filaMayor = k
     for s in range(k+1, n):
         if abs(Ab[s][k]) > mayor:
+            mayor = abs(Ab[s][k])
             filaMayor = s
-        if mayor == 0:
-            print("El sistema no tiene solucion unica")
-            return 0
-        else:
-            if filaMayor != k:
-                Ab = intercambioFilas(Ab, filaMayor, k)
-            return Ab
+    if mayor == 0:
+        print("El sistema no tiene solucion unica")
+        return 0
+    else:
+        if filaMayor != k:
+            Ab = intercambioFilas(Ab, filaMayor, k)
+        if lu:
+            return Ab, filaMayor
+        return Ab
 
 def intercambioMarcas(marcas, columnaMayor, k):
     marcaAux = marcas[k]
     marcas[k] = marcas[columnaMayor]
     marcas[columnaMayor] = marcaAux
-
     return marcas
 
 
@@ -92,7 +93,7 @@ def pivoteoTotal(Ab, n, k, marcas):
 
 def eliminacionGaussianaConPivoteo(A, b, n, pivoteo="parcial"):
     Ab = formaMatrizAumentada(A, b)
-    if pivoteo == "parcial":
+    if pivoteo == "parcial" or pivoteo == "parcialLU":
         pivoteo = pivoteoParcial
         for k in range(n-1):
             Ab = pivoteo(Ab, n, k)
@@ -118,3 +119,7 @@ def reordenar(x, marcas):
     for i, j in zip(marcas,orden):
         x[i] = x_aux[j]
     return x
+
+def printMatriz(m):
+    for i in m:
+        print(i)
