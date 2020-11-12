@@ -214,9 +214,7 @@ if __name__ == "__main__":
     meth = eval(input("Metodo (1,2,3): "))
     b = y
     a, b = makeMatrix(x,b,meth)
-    print(a[5][5])
     ab, marcas = eliminacionGaussianaConPivoteo(a, b, len(a),"")
-    print(ab[4][4])
     x = sustitucionRegresiva(ab, len(ab))
     x = reordenar(x,marcas)
     print()
