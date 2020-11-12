@@ -1,11 +1,10 @@
 import sys
 import math
-def factorizacionDirecta(A,me="cr"):
-    L, U =  inicializaLU(len(A),1)
+def factorizacionDirecta(A,etapa,me="cr"):
+    L, U =  inicializaLU(len(A),1.0)
     if me == "cr":
         print("Crout")
-    print()
-    print("Results:")
+
     for k in range(len(A)):
         sum1 = 0
         for p in range(k):
@@ -41,16 +40,23 @@ def factorizacionDirecta(A,me="cr"):
                 U[k][j] = (A[k][j] - sum3)/L[k][k]
             else:
                 U[k][j] = (A[k][j] - sum3)/L[k][k]
+        etapa += 1
+        print()
+        print(f"Etapa {etapa}")
         print()
         print("L:")
-        print()
         for i in L:
-            print(i)
+            result = ""
+            for j in i:
+                result += f"{j:.5f} "
+            print(result)
         print()
         print("U:")
-        print()
-        for j in U:
-            print(j)
+        for i in U:
+            result = ""
+            for j in i:
+                result += f"{j:.5f} "
+            print(result)
         print()
     return L, U
 

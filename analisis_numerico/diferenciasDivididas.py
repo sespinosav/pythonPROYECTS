@@ -4,6 +4,10 @@ ys = eval(input("Ingrese los y: "))
 table = [] 
 result = ""
 
+print("Interpolante de Newton")
+print()
+print("Resultados:")
+
 for i in range(len(ys)):
     row = [xs[i], ys[i]]
     index = 1
@@ -14,6 +18,19 @@ for i in range(len(ys)):
         index+=1
     table.append(row)
 
+print()
+print("Tabla de diferencias divididas:")
+print()
+for i in table:
+    result = ""
+    for j in i:
+        result += f"{j:.5f} "
+    print(result)
+
+result = ""
+print()
+print("Coeficientes del polinomio:")
+print()
 for i in range(len(ys)):
     result += f"{table[i][i+1]}"
     for j in range(i):
@@ -21,4 +38,7 @@ for i in range(len(ys)):
     result += "+"
 
 result = result[:len(result)-1]
-print(result)
+
+print("Polinomio:")
+print()
+print(result)    

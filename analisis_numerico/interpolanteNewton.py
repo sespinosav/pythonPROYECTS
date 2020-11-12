@@ -22,4 +22,17 @@ for n in range(2,len(ys)):
     b.append((ys[n] - fun(xs[n]))/den)
     result += f"+{b[n]}*{coef}"
     p.append(eval("lambda x: "+result))
-print(result)
+
+print("Interpolante Newton (sin diferencias divididas)")
+print()
+print("Resultados:")
+print()
+print("Coeficientes del polinomio:")
+print()
+for i in b:
+    print(i)
+print()
+print("Polinomio:")
+print()
+print(result)    
+

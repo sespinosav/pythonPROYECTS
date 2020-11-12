@@ -7,9 +7,22 @@ a, b = makeMatrix(x,b,2)
 ab, marcas = eliminacionGaussianaConPivoteo(a, b, len(a),"")
 x = sustitucionRegresiva(ab, len(ab))
 x = reordenar(x,marcas)
+
 print()
-print("X:")
+print("Trazadores cuadraticos")
 print()
-print(x)
+print("Coeficientes:")
 print()
-trazas(x,2)
+result = ""
+index = 0
+for i in x:
+    if index < 3:
+        index += 1
+        result += f"{i:.5f} "
+    else:
+        print(result)
+        result = f"{i:.5f} "
+        index = 1
+print(result)
+print()
+trazas(x, 2)

@@ -6,9 +6,17 @@ Tol = eval(input("Ingrese Tol: "))
 w = eval(input("Ingrese w: "))
 Nmax = eval(input("Ingrese Nmax: "))
 
+print()
+print("SOR(relajacion)")
+print()
+print("Resultados:")
+print()
+
+
 x1 = [0 for i in range(len(A))]
 count = 0
 disp = Tol + 1
+deci = str(int(str(Tol)[4])+2)
 
 def calcularNuevoSor(x0):
     for i in range(len(A)):
@@ -25,20 +33,30 @@ def norma(x1,x0):
         result += (i-j)**2
     return sqrt(result)
 
-def norma1(x1):
-    result = 0
-    for i in x1:
-        result += i**2
-    return sqrt(result)
-
 while disp > Tol and count < Nmax:
     x1 = calcularNuevoSor(x0)
-    disp = (norma(x1,x0))/norma1(x1)
+    result = [f"{i:.5f}" for i in x0]
+    if count <= 9:
+        ite = f"0{count}"
+    else:
+        ite = count
+    print(f"{ite} {disp:.{deci}f} {result}")
+    disp = (norma(x1,x0))
     x0 = [i for i in x1]    
     count += 1
-    print(count,x1)
+    
 if disp < Tol:
-    print(f"{x1} es aproximacion con una tolerancia = {Tol}")
+    if count <= 9:
+        ite = f"0{count}"
+    else:
+        ite = count
+    result = [f"{i:.5f}" for i in x0]
+    print(f"{ite} {disp:.{deci}f} {result}")
+    print()
+    print("x:")
+    for i in x0:
+        print(i)
 else:
     print(f"Fracaso en {Nmax} iteraciones")
+
 

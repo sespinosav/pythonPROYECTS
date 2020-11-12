@@ -1,9 +1,45 @@
 from math import sqrt
+import numpy as np
 A = eval(input("Ingrese A: "))
 b = eval(input("Ingrese b: "))
 x0 = eval(input("Ingrese x0: "))
-Tol = eval(input("Ingrese Tol: "))
+Tol = input("Ingrese Tol: ")
+deci = str(int(str(Tol)[3])+2)
+Tol = eval(Tol)
 Nmax = eval(input("Ingrese Nmax: "))
+
+print()
+print("Gauss-Seidel")
+print()
+print("Resultados:")
+
+H = [[0 if i >= j else -A[i][j] for i in range(len(A))] for j in range(len(A))]
+T = [[0 if i < j else A[i][j] for i in range(len(A))] for j in range(len(A))]
+T = np.array(T)
+C = list((np.linalg.inv(T)).dot(np.array(b)))
+T = list((np.linalg.inv(T)).dot(np.array(H)))
+
+print()
+print("T:")
+for i in T:
+    result = ""
+    for j in i:
+        result += f"{j:.5f} "
+    print(result)
+print()
+
+print()
+print("C:")
+for i in C:
+    print(i)
+print()
+
+val, ne =  np.linalg.eig(T) # T es la matriz
+sr = max(abs(val))
+print()
+print("Radio espectral: ")
+print(sr)
+print()
 
 x1 = [0 for i in range(len(A))]
 count = 0
@@ -26,19 +62,28 @@ def norma(x1,x0):
         result += (i-j)**2
     return sqrt(result)
 
-def norma1(x1):
-    result = 0
-    for i in x1:
-        result += i**2
-    return sqrt(result)
-
 while disp > Tol and count < Nmax:
     x1 = calcularNuevoSeidel(x0)
-    disp = (norma(x1,x0))/norma1(x1)
-    x0 = [i for i in x1]    
+    result = [f"{i:.5f}" for i in x0]
+    if count <= 9:
+        ite = f"0{count}"
+    else:
+        ite = count
+    print(f"{ite} {disp:.{deci}f} {result}")
+    disp = (norma(x1,x0))
+    x0 = [i for i in x1]   
     count += 1
 if disp < Tol:
-    print(f"{x1} es aproximacion con una tolerancia = {Tol}")
+    if count <= 9:
+        ite = f"0{count}"
+    else:
+        ite = count
+    result = [f"{i:.5f}" for i in x0]
+    print(f"{ite} {disp:.{deci}f} {result}")
+    print()
+    print("x:")
+    for i in x0:
+        print(i)
 else:
     print(f"Fracaso en {Nmax} iteraciones")
 
