@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="shortcut icon" href="{{ url_for('static', filename = 'img/math.svg') }}" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock %} - Numerical AS</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename = 'css/normalize.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Noto+Sans&family=Noto+Sans+TC:wght@100;300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename = 'css/sap.css') }}">
+</head>
+
+<body>
+    <header class="site-header grid">
+        <img class="img-header columnas-4" src="{{ url_for('static', filename = 'img/calculator.svg') }}" alt="logo">
+        <div class="content-header columnas-8">
+            <a href="/">
+                <h1>Numerical AS &reg;</h1>
+            </a>
+            <p>All in Numerical Analasis</p>
+        </div>
+        <div class="grid nav columnas-12 container">
+            <a class="item-nav" href="{{ url_for('guie') }}">GUIE</a>
+            <a class="item-nav" href="{{ url_for('numericalMethods') }}">Numerical Methods</a>
+            <a class="item-nav" href="{{ url_for('conversor') }}">Conversor</a>
+            <a class="item-nav" href="{{ url_for('makeMatrix') }}">Make Matrix</a>
+
+        </div>
+    </header>
+
+    {% block main %} {% endblock %} 
+    {% block footer %} {% endblock %}
+</body>
+
+</html>

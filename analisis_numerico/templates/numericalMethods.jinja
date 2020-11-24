@@ -1,0 +1,57 @@
+{% extends "base.jinja" %} 
+{% block title %}NM{% endblock %} 
+{% block main %}
+<main>
+    {% if nmc.getMethod() %}
+    <h4 class="text-main session container center-text">{{ nmc.getMethod() | upper}}</h4>
+    <form class="table-session session container" method="POST">
+        <div  class="label-main">
+        <label for="user">Varaible2: </label>
+            <input size=60 class="text-box" type="text" name="variable2" placeholder="Type your variable">
+        </div>
+        <div  class="label-main">
+        <label for="user">Varaible2: </label>
+            <input size=60 class="text-box" type="text" name="variable2" placeholder="Type your variable">
+        </div>
+        <div  class="label-main">
+        <label for="user">Varaible2: </label>
+            <input size=60 class="text-box" type="text" name="variable2" placeholder="Type your variable">
+        </div>
+        <div  class="label-main">
+        <label for="user">Varaible2: </label>
+            <input size=60 class="text-box" type="text" name="variable2" placeholder="Type your variable">
+        </d  class="label-main"iv>
+        <div>
+            <input type="submit" value="Go" class="boton container">
+        </div>
+    </form>
+    {% elif nmc.getResult() %}
+    <form class="table-session session container" method="GET">
+        <div class="label-main">
+            <input type="submit" value="Back" class="boton container">
+        </div>
+    </form>
+    {% else %}
+    <h4 class="text-main session container center-text">METHOD</h4>
+    <form class="table-session session container" method="POST">
+        <div>
+            <input size=60 class="text-box" type="text" name="method" placeholder="Type option method">
+        </div>
+
+        <div class="label-main">
+            <input type="submit" value="Get " class="boton container">
+        </div>
+    </form>
+    {% endif %}
+</main>
+{% endblock %}
+
+{% if not nmc.getResult() %} 
+{% set result = '<footer class="footer"><p>ALL RIGHTS RESERVED 2020 &copy;</p></footer>' %}
+{% else %}
+{% set result='' %}
+{% endif %}
+
+{% block footer %}
+{{ result }}
+{% endblock %}
