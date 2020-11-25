@@ -59,7 +59,7 @@ class ControllerNM:
                 A = eval(data['A'])
                 b = self.tranfB(eval(data['b']))
                 if len(A) != len(b):
-                    self.__html = "El sistema es inconsistente y no tiene solución porque el rango de A es diferente al ragon de b"
+                    self.__html = "</br>El sistema es inconsistente y no tiene solución porque el rango de A es diferente al ragon de b"
                 else:
                     if self.getMethod() == 'eliminacion gaussiana simple':
                         self.__html = self.__calculator.eliminacionSimple(A,b)
@@ -85,7 +85,7 @@ class ControllerNM:
                 tol = eval(data['Tol'])
                 Nmax = eval(data['Nmax'])
                 if len(A) != len(b):
-                    self.__html = "El sistema es inconsistente y no tiene solución porque el rango de A es diferente al ragon de b"
+                    self.__html = "</br>El sistema es inconsistente y no tiene solución porque el rango de A es diferente al ragon de b"
                 else:
                     if self.getMethod() == 'jacobi':
                         self.__html = self.__calculator.jacobi(A,b,x0,tol,Nmax)
@@ -97,7 +97,7 @@ class ControllerNM:
                 b = self.tranfB(eval(data['b']))
                 x0 = self.tranfB(eval(data['x0']))
                 if len(A) != len(b):
-                    self.__html = "El sistema es inconsistente y no tiene solución porque el rango de A es diferente al ragon de b"
+                    self.__html = "</br>El sistema es inconsistente y no tiene solución porque el rango de A es diferente al ragon de b"
                 else:
                     tol = eval(data['Tol'])
                     w = eval(data['w'])
@@ -108,7 +108,7 @@ class ControllerNM:
                 xs = self.tranfB(eval(data['xs']))
                 ys = self.tranfB(eval(data['ys']))
                 if len(xs) != len(xs):
-                    self.__html = "El sistema es inconsistente porque el rango de xs es difrente al rango de ys"
+                    self.__html = "</br>El sistema es inconsistente porque el rango de xs es difrente al rango de ys"
                 else:
                     if self.getMethod() == 'vandermonde':
                         self.__html = self.__calculator.vandermonde(xs,ys)
