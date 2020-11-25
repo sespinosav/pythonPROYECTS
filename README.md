@@ -18,7 +18,9 @@ You can run app in http://sespinosav.pythonanywhere.com/
 Or clone git in https://github.com/sespinosav/pythonPROYECTS.git 
 
 $ git clone https://github.com/sespinosav/pythonPROYECTS.git 
+
 $ cd pythonPROYECTS/analisis_numerico
+
 $ python  main.py
 
 Open your browser in http://127.0.0.1:5000/ or where the application is running.
