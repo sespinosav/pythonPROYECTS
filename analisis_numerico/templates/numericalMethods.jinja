@@ -2,31 +2,218 @@
 {% block title %}NM{% endblock %} 
 {% block main %}
 <main>
+    {% set bo = "go" %}
     {% if nmc.getMethod() %}
     <h4 class="text-main session container center-text">{{ nmc.getMethod() | upper}}</h4>
     <form class="table-session session container" method="POST">
-        <div  class="label-main">
-        <label for="user">Varaible2: </label>
-            <input size=60 class="text-box" type="text" name="variable2" placeholder="Type your variable">
-        </div>
-        <div  class="label-main">
-        <label for="user">Varaible2: </label>
-            <input size=60 class="text-box" type="text" name="variable2" placeholder="Type your variable">
-        </div>
-        <div  class="label-main">
-        <label for="user">Varaible2: </label>
-            <input size=60 class="text-box" type="text" name="variable2" placeholder="Type your variable">
-        </div>
-        <div  class="label-main">
-        <label for="user">Varaible2: </label>
-            <input size=60 class="text-box" type="text" name="variable2" placeholder="Type your variable">
-        </d  class="label-main"iv>
+        {% if nmc.getCategory() == 0 %}
+            <div  class="label-main">
+            <label>f: </label>
+                <input size=60 class="text-box" type="text" name="f" placeholder="Type function">
+            </div>
+
+            <div  class="label-main">
+            <label>x: </label>
+                <input size=60 class="text-box" type="text" name="x0" placeholder="Type x0">
+            </div>
+
+            <div  class="label-main">
+            <label>d: </label>
+                <input size=60 class="text-box" type="text" name="delta" placeholder="Type delta">
+            </div>
+
+            <div  class="label-main">
+            <label>i: </label>
+                <input size=60 class="text-box" type="text" name="niter" placeholder="Type number of iterationss">
+            </div>
+        {% elif nmc.getCategory() == 1 %}
+            <div  class="label-main">
+            <label>f: </label>
+                <input size=60 class="text-box" type="text" name="f" placeholder="Type function">
+            </div>
+
+            <div  class="label-main">
+            <label>a: </label>
+                <input size=60 class="text-box" type="text" name="xi" placeholder="Type lower limit or x0">
+            </div>
+
+            <div  class="label-main">
+            <label">b: </label>
+                <input size=60 class="text-box" type="text" name="xs" placeholder="Typ upper limit or x1">
+            </div>
+
+            <div  class="label-main">
+            <label>t: </label>
+                <input size=60 class="text-box" type="text" name="tolerance" placeholder="Type tolerance">
+            </div>
+
+            <div  class="label-main">
+            <label>i: </label>
+                <input size=60 class="text-box" type="text" name="niter" placeholder="Type number of iterations">
+            </div>
+        {% elif nmc.getCategory() == 2 %}
+            <div  class="label-main">
+            <label>f: </label>
+                <input size=60 class="text-box" type="text" name="f" placeholder="Type function">
+            </div>
+
+            <div  class="label-main">
+            <label>d: </label>
+                <input size=60 class="text-box" type="text" name="df" placeholder="Type derivate of function">
+            </div>
+
+            <div  class="label-main">
+            <label">t: </label>
+                <input size=60 class="text-box" type="text" name="tol" placeholder="Type tolerance">
+            </div>
+
+            <div  class="label-main">
+            <label>x: </label>
+                <input size=60 class="text-box" type="text" name="x0" placeholder="Type x0">
+            </div>
+
+            <div  class="label-main">
+            <label>i: </label>
+                <input size=60 class="text-box" type="text" name="niter" placeholder="Type number of iterations">
+            </div>
+        {% elif nmc.getCategory() == 3 %}
+            <div  class="label-main">
+            <label>f: </label>
+                <input size=60 class="text-box" type="text" name="f" placeholder="Type function">
+            </div>
+
+            <div  class="label-main">
+            <label>g: </label>
+                <input size=60 class="text-box" type="text" name="g" placeholder="Type g function">
+            </div>
+
+            <div  class="label-main">
+            <label">t: </label>
+                <input size=60 class="text-box" type="text" name="tole" placeholder="Type tolerance">
+            </div>
+
+            <div  class="label-main">
+            <label>x: </label>
+                <input size=60 class="text-box" type="text" name="xa" placeholder="Type x0">
+            </div>
+
+            <div  class="label-main">
+            <label>i: </label>
+                <input size=60 class="text-box" type="text" name="niter" placeholder="Type number of iterations">
+            </div>
+        {% elif nmc.getCategory() == 4 %}
+            <div  class="label-main">
+            <label>h: </label>
+                <input size=60 class="text-box" type="text" name="f" placeholder="Type function">
+            </div>
+
+            <div  class="label-main">
+            <label>1: </label>
+                <input size=60 class="text-box" type="text" name="df" placeholder="Type derivative function">
+            </div>
+
+            <div  class="label-main">
+            <label">2: </label>
+                <input size=60 class="text-box" type="text" name="df2" placeholder="Type second derivative">
+            </div>
+
+            <div  class="label-main">
+            <label">x: </label>
+                <input size=60 class="text-box" type="text" name="x0" placeholder="Type x0">
+            </div>
+
+            <div  class="label-main">
+            <label">t: </label>
+                <input size=60 class="text-box" type="text" name="tol" placeholder="Type tolerance">
+            </div>
+
+            <div  class="label-main">
+            <label>i: </label>
+                <input size=60 class="text-box" type="text" name="niter" placeholder="Type number of iterations">
+            </div>
+        {% elif nmc.getCategory() == 5 %}
+            <label">A: </label>
+                <input size=60 class="text-box" type="text" name="A" placeholder="Type A matrix">
+            </div>
+
+            <div  class="label-main">
+            <label>b: </label>
+                <input size=60 class="text-box" type="text" name="b" placeholder="Type b array">
+            </div>
+        {% elif nmc.getCategory() == 6 %}
+            <label">A: </label>
+                <input size=60 class="text-box" type="text" name="A" placeholder="Type A matrix">
+            </div>
+
+            <div  class="label-main">
+            <label>b: </label>
+                <input size=60 class="text-box" type="text" name="b" placeholder="Type b array">
+            </div>
+
+            <div  class="label-main">
+            <label>x: </label>
+                <input size=60 class="text-box" type="text" name="x0" placeholder="Type x0">
+            </div>
+
+            <div  class="label-main">
+            <label>t: </label>
+                <input size=60 class="text-box" type="text" name="Tol" placeholder="Type tolerance">
+            </div>
+
+            <div  class="label-main">
+            <label>i: </label>
+                <input size=60 class="text-box" type="text" name="Nmax" placeholder="Type number of iterations">
+            </div>
+        {% elif nmc.getCategory() == 7 %}
+            <label">A: </label>
+                <input size=60 class="text-box" type="text" name="A" placeholder="Type A matrix">
+            </div>
+
+            <div  class="label-main">
+            <label>b: </label>
+                <input size=60 class="text-box" type="text" name="b" placeholder="Typee b array">
+            </div>
+
+            <div  class="label-main">
+            <label>x: </label>
+                <input size=60 class="text-box" type="text" name="x0" placeholder="Type x0">
+            </div>
+
+            <div  class="label-main">
+            <label>t: </label>
+                <input size=60 class="text-box" type="text" name="Tol" placeholder="Type tolerance">
+            </div>
+
+            <div  class="label-main">
+            <label>w: </label>
+                <input size=60 class="text-box" type="text" name="w" placeholder="Type w">
+            </div>
+
+            <div  class="label-main">
+            <label>i: </label>
+                <input size=60 class="text-box" type="text" name="Nmax" placeholder="Type number of iterations">
+            </div>
+        {% elif nmc.getCategory() == 8 %}
+            <div  class="label-main">
+            <label>x: </label>
+                <input size=60 class="text-box" type="text" name="xs" placeholder="Type xs data">
+            </div>
+
+            <div  class="label-main">
+            <label>y: </label>
+                <input size=60 class="text-box" type="text" name="ys" placeholder="Type ys data">
+            </div>
+        {% else %}
+            {% set bo = "Back" %}
+            <h4 class="text-main session container center-text">THE METHOD ENTERED WAS NOT FOUND, TRY TO WRITE IT AGAIN OR LOOK AT THE GUIE FOR LIST OF AVAILABLE METHODS</h4>
+        {% endif %}
         <div>
-            <input type="submit" value="Go" class="boton container">
+            <input type="submit" value="{{bo}}" class="boton container">
         </div>
     </form>
     {% elif nmc.getResult() %}
     <form class="table-session session container" method="GET">
+        <spam>{{nmc.getHtml()}}<spam>
         <div class="label-main">
             <input type="submit" value="Back" class="boton container">
         </div>
@@ -47,7 +234,7 @@
 {% endblock %}
 
 {% if not nmc.getResult() %} 
-{% set result = '<footer class="footer"><p>ALL RIGHTS RESERVED 2020 &copy;</p></footer>' %}
+{% set result = '<footer class="footer"><p>ALL RIGHTS RESERVED 2020 &copy; <a href="https://github.com/sespinosav" target="blank_">sespinosav</a></p></footer>' %}
 {% else %}
 {% set result='' %}
 {% endif %}

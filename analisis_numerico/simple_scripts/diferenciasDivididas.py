@@ -31,6 +31,11 @@ result = ""
 print()
 print("Coeficientes del polinomio:")
 print()
+
+for i in range(len(ys)):
+    print(table[i][i+1])
+
+print()
 for i in range(len(ys)):
     result += f"{table[i][i+1]}"
     for j in range(i):

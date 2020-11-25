@@ -2,9 +2,6 @@ import sys
 import math
 def factorizacionDirecta(A,etapa,me="cr"):
     L, U =  inicializaLU(len(A),1.0)
-    if me == "cr":
-        print("Crout")
-
     for k in range(len(A)):
         sum1 = 0
         for p in range(k):

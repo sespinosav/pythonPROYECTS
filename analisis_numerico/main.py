@@ -4,12 +4,8 @@ except:
    #Install neccesary modules
    import os
    try:
-      os.system('pythn3 -m pip install --upgrade')
-      os.system('python3 -m pip install flask')
       os.system('pip install --upgrade')
       os.system('pip install flask')
-      os.system('conda install flask')
-      os.system('conda install -c anaconda flask')
       from flask import Flask, render_template, request
    except:
       print('Your OS doesn\'t understand default commands for install dependencies, so try run this file as administrator, or install flask module for yourself')
@@ -22,12 +18,8 @@ except:
    #Install neccesary modules
    import os
    try:
-      os.system('pythn3 -m pip install --upgrade')
-      os.system('python3 -m pip install numpy')
       os.system('pip install --upgrade')
-      os.system('pip install numpy')
-      os.system('conda install numpy')
-      os.system('conda install -c anaconda numpy')
+      os.system('pip install numpy==1.19.3')
       import numpy as np
    except:
       print('Your OS doesn\'t understand default commands for install dependencies, so try run this file as administrator, or install numpy module for yourself')
@@ -35,9 +27,16 @@ except:
       sys.exit()
 
 #Import controller
+from numericalMethods import NM
 from controllerNM import ControllerNM
+from controllerMatrix import ControllerMatrix
+from controllerConversor import ControllerConversor
+import sys
+
 app = Flask(__name__)
-nmc = ControllerNM()
+nmc = ControllerNM(NM())
+mc = ControllerMatrix()
+cc  = ControllerConversor()
 
 @app.route('/')
 def index():
@@ -60,7 +59,7 @@ def numericalMethods():
       nmc.setMethod(request.form['method'])
       nmc.setResult(False)
    elif request.method == "POST" and len(request.form) > 1:
-      nmc.setMethod(request.form['variable2'])
+      nmc.setUp(request.form)
       nmc.setMethod(False)
       nmc.setResult(True)
    else:
@@ -68,13 +67,30 @@ def numericalMethods():
       nmc.setResult(False)
    return render_template('numericalMethods.jinja', nmc=nmc)
 
-@app.route('/makeMatrix')
+@app.route('/makeMatrix', methods=["GET", "POST"])
 def makeMatrix():
-   return render_template('makeMatrix.jinja')
+   data = None
+   if request.method == "POST" and len(request.form) == 1 and not mc.getN():
+      mc.setN(request.form['n'])
+      mc.setResult(False)
+   elif request.method == "POST" and '0' in request.form:
+      data = request.form
+      mc.setN(False)
+      mc.setResult(True)
+   else:
+      mc.setN(False)
+      mc.setResult(False)
+   return render_template('makeMatrix.jinja', mc=mc,data=data)
 
-@app.route('/conversor')
+@app.route('/conversor', methods=["GET", "POST"])
 def conversor():
-   return render_template('conversor.jinja')
+   data = None
+   if request.method == "POST":
+      data = request.form
+      cc.setResult(True)
+   else:
+      cc.setResult(False)
+   return render_template('conversor.jinja', cc=cc,data=data)
 
 @app.route('/user/<name>')
 def user(name):

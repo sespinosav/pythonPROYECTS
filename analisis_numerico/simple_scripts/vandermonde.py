@@ -33,11 +33,10 @@ x = reordenar(x, marcas)
 print()
 print("Coeficientes del polinomio:")
 print()
+result = ""
 for i in x:
-    result = ""
-    for i in data:
-        result += f"{float(i):.5} "
-    print(result)
+    result += f"{float(i):.5} "
+print(result)
 
 result = ""
 coef = len(x)

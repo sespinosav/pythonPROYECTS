@@ -71,8 +71,9 @@ h4 {
 }
 
 a {
-    text-decoration: none;
     font-family: 'Noto Sans TC', sans-serif;
+    text-decoration: none;
+    color: black;
 }
 
 p,
@@ -219,6 +220,7 @@ label {
     font-size: 1.8rem;
     padding: 1rem 3rem;
     margin-top: 3rem;
+    margin-bottom: 1rem;
     display: inline-block;
     text-align: center;
     border: none;
@@ -253,4 +255,15 @@ label {
 
 .not-Found {
     text-align: center;
+}
+
+
+/* This text is in Consolas */
+
+spam {
+    font-family: Consolas, monaco, monospace;
+}
+
+a {
+    text-decoration: none;
 }

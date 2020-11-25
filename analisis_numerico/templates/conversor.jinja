@@ -1,6 +1,38 @@
 {% extends "base.jinja" %} 
 {% block title %}Conversor{% endblock %}
-{% block main %} {% endblock %}
+{% block main %} 
+    {% if cc.getResult()%}
+        <h4 class="text-main session container center-text">RESULT</h4>
+        <form class="table-session session container" method="GET">
+            <spam>{{cc.conversor(data)}}</spam>
+            <div class="label-main">
+                <input type="submit" value="Back" class="boton container">
+            </div>
+        </form>
+    {% else %}
+        <h4 class="text-main session container center-text">TYPE NUMBER</h4>
+        <form class="table-session session container" method="POST">
+            <div  class="label-main">
+            <label>n: </label>
+                <input size=60 class="text-box" type="text" name="n" placeholder="type number to convert">
+            </div>
+
+            <div  class="label-main">
+            <label>o: </label>
+                <input size=60 class="text-box" type="text" name="o" placeholder="type original base of number">
+            </div>
+
+            <div  class="label-main">
+            <label>t: </label>
+                <input size=60 class="text-box" type="text" name="t" placeholder="type the base to which you want to convert the number">
+            </div>
+
+            <div class="label-main">
+                <input type="submit" value="Go " class="boton container">
+            </div>
+        </form>
+    {% endif %}
+{% endblock %}
 {% block footer %}
-    <footer class="footer"><p>ALL RIGHTS RESERVED 2020 &copy;</p></footer>
+    <footer class="footer"><p>ALL RIGHTS RESERVED 2020 &copy;<a href="https://github.com/sespinosav" target="blank_">sespinosav</a></p></footer>
 {% endblock %}

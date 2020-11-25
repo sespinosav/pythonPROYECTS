@@ -12,7 +12,7 @@ Newton
 
 Tabla de resultados: 
 
-|i|        xi        |     g(xi)       |      f(xi)      |        E       | 
+|i|        xi        |     f(xi)      |        E       | 
 """)
 
 fx = f(x0)
@@ -45,6 +45,6 @@ if fx == 0:
 elif err < tol:
     print(f"{x1} es aproximacion a una raiz con una tolerancia:", tol)
 elif dfx == 0:
-    print(f"{x1} es una posible raiz multiple",x1)
+    print(f"{x1} es una posible raiz multiple")
 else:
     print("Fracaso en " + niter + " iteraciones")

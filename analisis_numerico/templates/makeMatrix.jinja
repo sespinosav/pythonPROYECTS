@@ -1,6 +1,40 @@
 {% extends "base.jinja" %} 
 {% block title %}Make Matrix{% endblock %} 
-{% block main %}{% endblock %}
+{% block main %}
+    {% if mc.getN() %}
+        <h4 class="text-main session container center-text">TYPE ROWS</h4>
+        <form class="table-session session container" method="POST">
+            {% for i in range(mc.getN()) %}
+                <div  class="label-main">
+                <label>{{i}}: </label>
+                    <input size=70 class="text-box" type="text" name="{{i}}" placeholder="{{i}} type numbers separated by spaces ">
+                </div>
+            {% endfor %}
+            <div class="label-main">
+                <input type="submit" value="Go " class="boton container">
+            </div>
+        </form>
+    {% elif mc.getResult()%}
+        <h4 class="text-main session container center-text">MATRIX</h4>
+        <form class="table-session session container" method="GET">
+            <spam>{{mc.makeMatrix(data)}}</spam>
+            <div class="label-main">
+                <input type="submit" value="Back" class="boton container">
+            </div>
+        </form>
+    {% else %}
+        <h4 class="text-main session container center-text">MAKE MATRIX</h4>
+        <form class="table-session session container" method="POST">
+            <div>
+                <input size=30 class="text-box" type="text" name="n" placeholder="Type n of matrix">
+            </div>
+
+            <div class="label-main">
+                <input type="submit" value="Get " class="boton container">
+            </div>
+        </form>
+    {% endif %}
+{% endblock %}
 {% block footer %}
-    <footer class="footer"><p>ALL RIGHTS RESERVED 2020 &copy;</p></footer>
+    <footer class="footer"><p>ALL RIGHTS RESERVED 2020 &copy;<a href="https://github.com/sespinosav" target="blank_">sespinosav</a></p></footer>
 {% endblock %}
