@@ -56,7 +56,7 @@ class ControllerNM:
 
             elif self.getCategory() == 5:
                 A = eval(data['A'])
-                b = eval(data['b'])
+                b = self.tranfB(eval(data['b']))
                 if self.getMethod() == 'eliminacion gaussiana simple':
                     self.__html = self.__calculator.eliminacionSimple(A,b)
                 elif self.getMethod() == 'eliminacion gaussiana con pivoteo parcial':
@@ -76,8 +76,8 @@ class ControllerNM:
             
             elif self.getCategory() == 6:
                 A = eval(data['A'])
-                b = eval(data['b'])
-                x0 = eval(data['x0'])
+                b = self.tranfB(eval(data['b']))
+                x0 = self.tranfB(eval(data['x0']))
                 tol = eval(data['Tol'])
                 Nmax = eval(data['Nmax'])
                 if self.getMethod() == 'jacobi':
@@ -87,16 +87,16 @@ class ControllerNM:
 
             elif self.getCategory() == 7:
                 A = eval(data['A'])
-                b = eval(data['b'])
-                x0 = eval(data['x0'])
+                b = self.tranfB(eval(data['b']))
+                x0 = self.tranfB(eval(data['x0']))
                 tol = eval(data['Tol'])
                 w = eval(data['w'])
                 Nmax = eval(data['Nmax'])
                 self.__html = self.__calculator.sor(A,b,x0,tol,w,Nmax)
             
             elif self.getCategory() == 8:
-                xs = eval(data['xs'])
-                ys = eval(data['ys'])
+                xs = self.tranfB(eval(data['xs']))
+                ys = self.tranfB(eval(data['ys']))
                 if self.getMethod() == 'vandermonde':
                     self.__html = self.__calculator.vandermonde(xs,ys)
                 elif self.getMethod() == 'interpolante de newton sin diferencias':
@@ -177,3 +177,12 @@ class ControllerNM:
 
     def getHtml(self):
         return self.__html
+
+    def tranfB(self,b):
+        result = []
+        if type(b[0]) == type([]):
+            for i in b:
+                result.append(i[0])
+            return result
+        else:
+            return b
