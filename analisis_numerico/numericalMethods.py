@@ -310,6 +310,9 @@ class NM:
         Ab, html = self.eliminacionGaussianaConPivoteo(A, b, len(A), html)
         x = self.sustitucionRegresiva(Ab, len(A))
 
+        if "diagonal" in html:
+            return html
+
         html+="</br>Despues de aplicar sustitucion regresiva</br></br>x:</br>"
 
         for i in x:
@@ -321,6 +324,10 @@ class NM:
         html="</br>Eliminacion gaussiana con pivoteo total</br></br>"
 
         Ab, marcas, html = self.eliminacionGaussianaConPivoteo(A, b, len(A), html,"")
+
+        if "diagonal" in html:
+            return html
+
         x = self.sustitucionRegresiva(Ab, len(A))
         x = self.reordenar(x, marcas)
 
@@ -351,6 +358,9 @@ class NM:
             Ab = self.formaMatrizAumentada(A,b)                      
             for k in range(n-1):
                 for i in range(k+1, n):
+                    if Ab[k][k] == 0:
+                        html += f"</br>Se ha econtrado un 0 en la diagonal, en la posicion {k+1},{k+1} el método se suspende por una division por 0</br>"
+                        return Ab, html
                     L[i][k] = multiplicador = Ab[i][k] / Ab[k][k]
                     for j in range(k, n+1):
                         Ab[i][j] -= (multiplicador * Ab[k][j])
@@ -385,6 +395,9 @@ class NM:
                 result += f"{j:.10e} "
             html += result+"</br>"
         Ab, html  = factorizacionLU(A,b, len(A),etapa,html)
+
+        if "diagonal" in html:
+            return html
 
         Lb = self.formaMatrizAumentada(L,b)
         z = self.sustitucionProgresiva(Lb,len(L))
@@ -422,6 +435,9 @@ class NM:
                     marcas = self.intercambioMarcas(marcas, mayor, k)
                 mults_aux = {}
                 for i in range(k+1, n):
+                    if Ab[k][k] == 0:
+                        html += f"</br>Se ha econtrado un 0 en la diagonal, en la posicion {k+1},{k+1} el método se suspende por una division por 0</br>"
+                        return Ab, html
                     mults_aux[(i,k)] = multiplicador = Ab[i][k] / Ab[k][k]
                     for j in range(k, n+1):
                         Ab[i][j] -= (multiplicador * Ab[k][j])
@@ -467,6 +483,9 @@ class NM:
 
         Ab, marcas, html = factorizacionLU(A,b, len(A), etapa, html)
 
+        if "diagonal" in html:
+            return html
+
         b = self.reordenar(b, marcas)
         Lb = self.formaMatrizAumentada(L,b)
         z = self.sustitucionProgresiva(Lb,len(L))
@@ -489,6 +508,10 @@ class NM:
                 result += f"{j:.10e} "
             html+=result+"</br>"
         L, U, html = self.factorizacionDirecta(A,etapa,html,"cr")
+
+        if "diagonal" in html:
+            return html
+
         Lb = self.formaMatrizAumentada(L,b)
         z = self.sustitucionProgresiva(Lb,len(L))
         Uz = self.formaMatrizAumentada(U,z)
@@ -511,7 +534,10 @@ class NM:
                 result += f"{j:.10e} "
             html+=result+"</br>"
 
-        L, U = self.factorizacionDirecta(A,etapa,html,"do")
+        L, U, html = self.factorizacionDirecta(A,etapa,html,"do")
+        if "diagonal" in html:
+            return html
+
         Lb = self.formaMatrizAumentada(L,b)
         z = self.sustitucionProgresiva(Lb,len(L))
         Uz = self.formaMatrizAumentada(U,z)
@@ -537,6 +563,9 @@ class NM:
         L, U, html = self.factorizacionDirecta(A,etapa,html,"ch")
         if "imaginarios" in html:
             return html
+        if "diagonal" in html:
+            return html
+
         Lb = self.formaMatrizAumentada(L,b)
         z = self.sustitucionProgresiva(Lb,len(L))
         Uz = self.formaMatrizAumentada(U,z)
@@ -1122,6 +1151,9 @@ class NM:
             for k in range(n-1):
                 Ab = pivoteo(Ab, n, k)
                 for i in range(k + 1, n):
+                    if Ab[k][k] == 0:
+                        html += f"</br>Se ha econtrado un 0 en la diagonal, en la posicion {k+1},{k+1} el método se suspende por una division por 0</br>"
+                        return Ab, html
                     multiplicador = Ab[i][k] / Ab[k][k]
                     for j in range(k, n+1):
                         Ab[i][j] -= multiplicador * Ab[k][j]
@@ -1149,6 +1181,9 @@ class NM:
             for k in range(n-1):
                 Ab, marcas = pivoteo(Ab, n, k, marcas)
                 for i in range(k + 1, n):
+                    if Ab[k][k] == 0:
+                        html += f"</br>Se ha econtrado un 0 en la diagonal, en la posicion {k+1},{k+1} el método se suspende por una division por 0</br>"
+                        return Ab, marcas, html
                     multiplicador = Ab[i][k] / Ab[k][k]
                     for j in range(k, n+1):
                         Ab[i][j] -= multiplicador * Ab[k][j]
@@ -1190,10 +1225,16 @@ class NM:
                 for p in range(k):
                     sum2 += L[i][p]*U[p][k]
                 if me == "do":
+                    if U[k][k] == 0:
+                        html += f"</br>Se ha econtrado un 0 en la diagonal, en la posicion {k+1},{k+1} el método se suspende por una division por 0</br>"
+                        return L, U, html 
                     L[i][k] = (A[i][k] - sum2)/U[k][k]
                 if me == "cr":
                     L[i][k] = A[i][k] - sum2
                 else:
+                    if U[k][k] == 0:
+                        html += f"</br>Se ha econtrado un 0 en la diagonal, en la posicion {k+1},{k+1} el método se suspende por una division por 0</br>"
+                        return L, U, html 
                     L[i][k] = (A[i][k] - sum2)/U[k][k]
             for j in range(k+1,len(A)):
                 sum3 = 0
@@ -1202,8 +1243,14 @@ class NM:
                 if me == "do":
                     U[k][j] = A[k][j] - sum3
                 if me == "cr":
+                    if L[k][k] == 0:
+                        html += f"</br>Se ha econtrado un 0 en la diagonal, en la posicion {k+1},{k+1} el método se suspende por una division por 0</br>"
+                        return L, U, html         
                     U[k][j] = (A[k][j] - sum3)/L[k][k]
                 else:
+                    if L[k][k] == 0:
+                        html += f"</br>Se ha econtrado un 0 en la diagonal, en la posicion {k+1},{k+1} el método se suspende por una division por 0</br>"
+                        return L, U, html   
                     U[k][j] = (A[k][j] - sum3)/L[k][k]
             etapa += 1
             html += f"</br>Etapa {etapa}</br></br>L:</br>" 
