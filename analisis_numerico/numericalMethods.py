@@ -292,6 +292,9 @@ class NM:
         html="</br>Eliminacion gaussiana simple</br></br>"
 
         Ab, html = self.eliminacion(A,b,len(A),html)
+        
+        if "diagonal" in html:
+            return html
         x = self.sustitucionRegresiva(Ab, len(A))
 
         html+="</br>Despues de aplicar sustitucion regresiva</br></br>x:</br>"
@@ -702,9 +705,28 @@ class NM:
 
     def sor(self,A,b,x0,Tol,w,Nmax):
         from math import sqrt
+        import numpy as np
         html = "</br>SOR(relajacion)</br></br>Resultados:</br></br>"
-        html += f"|i|E|X|</br>"
+        H = [[0 if i >= j else -A[i][j] for i in range(len(A))] for j in range(len(A))]
+        T = [[0 if i < j else A[i][j] for i in range(len(A))] for j in range(len(A))]
+        T = np.array(T)
+        C = list((np.linalg.inv(T)).dot(np.array(b)))
+        T = list((np.linalg.inv(T)).dot(np.array(H)))
 
+        html += "</br>T:</br>"
+        for i in T:
+            result = ""
+            for j in i:
+                result += f"{j:.10e} "
+            html+=result+"</br>"
+
+        html += "</br>C:</br>"
+        for i in C:
+            html += f"{i}</br>"
+
+        val, ne =  np.linalg.eig(T) # T es la matriz
+        sr = max(abs(val))
+        html += f"</br>Radio espectral:</br>{sr}</br></br>"
         x1 = [0 for i in range(len(A))]
         count = 0
         disp = Tol + 1
@@ -985,6 +1007,9 @@ class NM:
             html += result+"</br>"
         for k in range(n-1):
             for i in range(k+1, n):
+                if Ab[k][k] == 0:
+                    html += f"</br>Se ha econtrado un 0 en la diagonal, en la posicion {k+1},{k+1} el método se suspende por una division por 0</br>"
+                    return Ab, html
                 multiplicador = Ab[i][k] / Ab[k][k]
                 for j in range(k, n+1):
                     Ab[i][j] -= (multiplicador * Ab[k][j])
@@ -1057,7 +1082,6 @@ class NM:
         marcas[k] = marcas[columnaMayor]
         marcas[columnaMayor] = marcaAux
         return marcas
-
 
     def pivoteoTotal(self,Ab, n, k, marcas):
         mayor = 0

@@ -1,5 +1,5 @@
 try:
-   from flask import Flask, render_template, request
+   from flask import Flask, render_template, request, url_for
 except:
    #Install neccesary modules
    import os
@@ -27,6 +27,7 @@ except:
       sys.exit()
 
 #Import controller
+import os
 from numericalMethods import NM
 from controllerNM import ControllerNM
 from controllerMatrix import ControllerMatrix
@@ -100,5 +101,21 @@ def user(name):
 def page_not_found(e):
    return render_template('404.jinja',e=e), 404
 
+
+#snippet for update static files in web debugging
+@app.context_processor
+def override_url_for():
+    return dict(url_for=dated_url_for)
+
+def dated_url_for(endpoint, **values):
+    if endpoint == 'static':
+        filename = values.get('filename', None)
+        if filename:
+            file_path = os.path.join(app.root_path,
+                                 endpoint, filename)
+            values['q'] = int(os.stat(file_path).st_mtime)
+    return url_for(endpoint, **values)
+
 if __name__ == '__main__':
+   app.config["TEMPLATES_AUTO_RELOAD"] = True
    app.run(debug=True)

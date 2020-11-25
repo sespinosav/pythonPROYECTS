@@ -38,7 +38,7 @@
             </div>
 
             <div  class="label-main">
-            <label">b: </label>
+            <label>b: </label>
                 <input size=60 class="text-box" type="text" name="xs" placeholder="Typ upper limit or x1">
             </div>
 
@@ -63,7 +63,7 @@
             </div>
 
             <div  class="label-main">
-            <label">t: </label>
+            <label>t: </label>
                 <input size=60 class="text-box" type="text" name="tol" placeholder="Type tolerance">
             </div>
 
@@ -88,7 +88,7 @@
             </div>
 
             <div  class="label-main">
-            <label">t: </label>
+            <label>t: </label>
                 <input size=60 class="text-box" type="text" name="tole" placeholder="Type tolerance">
             </div>
 
@@ -113,17 +113,17 @@
             </div>
 
             <div  class="label-main">
-            <label">2: </label>
+            <label>2: </label>
                 <input size=60 class="text-box" type="text" name="df2" placeholder="Type second derivative">
             </div>
 
             <div  class="label-main">
-            <label">x: </label>
+            <label>x: </label>
                 <input size=60 class="text-box" type="text" name="x0" placeholder="Type x0">
             </div>
 
             <div  class="label-main">
-            <label">t: </label>
+            <label>t: </label>
                 <input size=60 class="text-box" type="text" name="tol" placeholder="Type tolerance">
             </div>
 
@@ -132,7 +132,8 @@
                 <input size=60 class="text-box" type="text" name="niter" placeholder="Type number of iterations">
             </div>
         {% elif nmc.getCategory() == 5 %}
-            <label">A: </label>
+            <div  class="label-main">
+            <label>A: </label>
                 <input size=60 class="text-box" type="text" name="A" placeholder="Type A matrix">
             </div>
 
@@ -141,7 +142,8 @@
                 <input size=60 class="text-box" type="text" name="b" placeholder="Type b array">
             </div>
         {% elif nmc.getCategory() == 6 %}
-            <label">A: </label>
+            <div  class="label-main">
+            <label>A: </label>
                 <input size=60 class="text-box" type="text" name="A" placeholder="Type A matrix">
             </div>
 
@@ -165,7 +167,8 @@
                 <input size=60 class="text-box" type="text" name="Nmax" placeholder="Type number of iterations">
             </div>
         {% elif nmc.getCategory() == 7 %}
-            <label">A: </label>
+            <div  class="label-main">
+            <label>A: </label>
                 <input size=60 class="text-box" type="text" name="A" placeholder="Type A matrix">
             </div>
 
@@ -221,9 +224,34 @@
     {% else %}
     <h4 class="text-main session container center-text">METHOD</h4>
     <form class="table-session session container" method="POST">
-        <div>
-            <input size=60 class="text-box" type="text" name="method" placeholder="Type option method">
-        </div>
+        <center><select style="width:500px" class="text-box" name="method" id="cars">
+                    <option value="busquedas incrementales">busquedas incrementales</option>
+                    <option value="biseccion">biseccion</option>
+                    <option value="regla falsa">regla falsa</option>
+                    <option value="secante">secante</option>
+                    <option value="newtone">newton</option>
+                    <option value="punto fijo">punto fijo</option>
+                    <option value="raices multiples">raices multiples</option>
+                    <option value="eliminacion gaussiana simple">eliminacion gaussiana simple</option>
+                    <option value="eliminacion gaussiana con pivoteo parcial">eliminacion gaussiana con pivoteo parcial</option>
+                    <option value="eliminacion gaussiana con pivoteo total">eliminacion gaussiana con pivoteo total</option>
+                    <option value="lu simple">lu simple</option>
+                    <option value="lu parcial">lu parcial</option>
+                    <option value="crout">crout</option>
+                    <option value="doolittle">doolittle</option>
+                    <option value="cholesky">cholesky</option>
+                    <option value="jacobi">jacobi</option>
+                    <option value="gauss seidel">gauss seidel</option>
+                    <option value="sor">sor</option>
+                    <option value="vandermonde">vandermonde</option>
+                    <option value="interpolante de newton sin diferencias">interpolante de newton sin diferencias</option>
+                    <option value="interpolante de newton">interpolante de newton</option>
+                    <option value="lagrange">lagrange</option>
+                    <option value="trazadores lineales">trazadores lineales</option>
+                    <option value="trazadores cuadraticos">trazadores cuadraticos</option>
+                    <option value="trazadores cubicos">trazadores cubicos</option>
+        </select>
+        </center>
 
         <div class="label-main">
             <input type="submit" value="Get " class="boton container">

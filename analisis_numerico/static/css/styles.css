@@ -3,6 +3,7 @@ html {
     /** para que el whidt no afecte al padding **/
     font-size: 62.5%;
     /** Reset para REMS - 62,5% = 10px de 16px **/
+    background-color: rgb(0, 0, 0);
 }
 
 *,
@@ -78,6 +79,7 @@ a {
 
 p,
 label {
+    color: white;
     font-family: 'Noto Sans', sans-serif;
 }
 
@@ -124,12 +126,12 @@ label {
 .site-header {
     max-height: 20rem;
     padding: 1.5rem 3rem;
-    background-color: #79B700;
+    background-color: #2738da;
 }
 
 .content-header {
     padding-left: 30rem;
-    color: #D8E68B;
+    color: #8491fd;
     text-align: center;
     line-height: 0.5;
 }
@@ -145,7 +147,7 @@ label {
 }
 
 .site-header h1 {
-    color: #8F5E3C;
+    color: #63e0d0;
     font-size: 5rem;
     text-align: center;
     font-weight: 700;
@@ -162,7 +164,7 @@ label {
 }
 
 .item-nav {
-    color: #456b02;
+    color: #290370;
     text-transform: uppercase;
 }
 
@@ -172,7 +174,7 @@ label {
 .text-main {
     margin-top: 2rem;
     text-transform: uppercase;
-    color: #8F5E3C;
+    color: #63e0d0;
     font-family: 'Noto Sans TC', sans-serif;
     font-weight: 400;
 }
@@ -192,20 +194,19 @@ label {
 }
 
 .ingreso {
-    color: #456b02;
+    color: #8491fd;
     padding: 20px 50px;
     margin-top: 50px;
 }
 
 .text-box {
-    color: #8F5E3C;
-    background-color: #D8E68B;
+    background-color: #8491fd;
     border-radius: 5px;
-    border: 3px solid #79B700;
+    border: 3px solid #2738da;
 }
 
 .text-box::placeholder {
-    color: #65a000;
+    color: #811fdd;
 }
 
 .center-content {
@@ -226,7 +227,7 @@ label {
     border: none;
     display: block;
     flex: 0 0 100%;
-    background: #65a000;
+    background: #2738da;
     width: 95%;
     max-width: 40rem;
 }
@@ -239,7 +240,7 @@ label {
 /** FOOTER **/
 
 .footer {
-    background-color: #79B700;
+    background-color: #2738da;
     height: 10rem;
     position: fixed;
     bottom: 0;
@@ -248,7 +249,7 @@ label {
 
 .footer p {
     padding-top: 2rem;
-    color: #1c1c1c;
+    color: #000000;
     text-align: center;
     font-size: 2rem;
 }
@@ -261,9 +262,11 @@ label {
 /* This text is in Consolas */
 
 spam {
+    color: white;
     font-family: Consolas, monaco, monospace;
 }
 
 a {
+    color: white;
     text-decoration: none;
 }

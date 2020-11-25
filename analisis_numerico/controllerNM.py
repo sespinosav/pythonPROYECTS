@@ -54,25 +54,29 @@ class ControllerNM:
                 niter = eval(data['niter'])
                 self.__html = self.__calculator.raicesMultiples(f,df,df2,tol,x0,niter)
 
+
             elif self.getCategory() == 5:
                 A = eval(data['A'])
                 b = self.tranfB(eval(data['b']))
-                if self.getMethod() == 'eliminacion gaussiana simple':
-                    self.__html = self.__calculator.eliminacionSimple(A,b)
-                elif self.getMethod() == 'eliminacion gaussiana con pivoteo parcial':
-                    self.__html = self.__calculator.eliminacionParcial(A,b)
-                elif self.getMethod() == 'eliminacion gaussiana con pivoteo total':
-                    self.__html = self.__calculator.eliminacionTotal(A,b)
-                elif self.getMethod() == 'lu simple':
-                    self.__html = self.__calculator.luSimple(A,b)
-                elif self.getMethod() == 'lu parcial':
-                    self.__html = self.__calculator.luParcial(A,b)
-                elif self.getMethod() == 'crout':
-                    self.__html = self.__calculator.crout(A,b)
-                elif self.getMethod() == 'doolittle':
-                    self.__html = self.__calculator.doolittle(A,b)
-                elif self.getMethod() == 'cholesky':
-                    self.__html = self.__calculator.cholesky(A,b)
+                if len(A) != len(b):
+                    self.__html = "El sistema es inconsistente y no tiene solución porque el rango de A es diferente al ragon de b"
+                else:
+                    if self.getMethod() == 'eliminacion gaussiana simple':
+                        self.__html = self.__calculator.eliminacionSimple(A,b)
+                    elif self.getMethod() == 'eliminacion gaussiana con pivoteo parcial':
+                        self.__html = self.__calculator.eliminacionParcial(A,b)
+                    elif self.getMethod() == 'eliminacion gaussiana con pivoteo total':
+                        self.__html = self.__calculator.eliminacionTotal(A,b)
+                    elif self.getMethod() == 'lu simple':
+                        self.__html = self.__calculator.luSimple(A,b)
+                    elif self.getMethod() == 'lu parcial':
+                        self.__html = self.__calculator.luParcial(A,b)
+                    elif self.getMethod() == 'crout':
+                        self.__html = self.__calculator.crout(A,b)
+                    elif self.getMethod() == 'doolittle':
+                        self.__html = self.__calculator.doolittle(A,b)
+                    elif self.getMethod() == 'cholesky':
+                        self.__html = self.__calculator.cholesky(A,b)
             
             elif self.getCategory() == 6:
                 A = eval(data['A'])
@@ -80,37 +84,46 @@ class ControllerNM:
                 x0 = self.tranfB(eval(data['x0']))
                 tol = eval(data['Tol'])
                 Nmax = eval(data['Nmax'])
-                if self.getMethod() == 'jacobi':
-                    self.__html = self.__calculator.jacobi(A,b,x0,tol,Nmax)
-                elif self.getMethod() == 'gauss seidel':
-                    self.__html = self.__calculator.gaussSeidel(A,b,x0,tol,Nmax)
+                if len(A) != len(b):
+                    self.__html = "El sistema es inconsistente y no tiene solución porque el rango de A es diferente al ragon de b"
+                else:
+                    if self.getMethod() == 'jacobi':
+                        self.__html = self.__calculator.jacobi(A,b,x0,tol,Nmax)
+                    elif self.getMethod() == 'gauss seidel':
+                        self.__html = self.__calculator.gaussSeidel(A,b,x0,tol,Nmax)
 
             elif self.getCategory() == 7:
                 A = eval(data['A'])
                 b = self.tranfB(eval(data['b']))
                 x0 = self.tranfB(eval(data['x0']))
-                tol = eval(data['Tol'])
-                w = eval(data['w'])
-                Nmax = eval(data['Nmax'])
-                self.__html = self.__calculator.sor(A,b,x0,tol,w,Nmax)
+                if len(A) != len(b):
+                    self.__html = "El sistema es inconsistente y no tiene solución porque el rango de A es diferente al ragon de b"
+                else:
+                    tol = eval(data['Tol'])
+                    w = eval(data['w'])
+                    Nmax = eval(data['Nmax'])
+                    self.__html = self.__calculator.sor(A,b,x0,tol,w,Nmax)
             
             elif self.getCategory() == 8:
                 xs = self.tranfB(eval(data['xs']))
                 ys = self.tranfB(eval(data['ys']))
-                if self.getMethod() == 'vandermonde':
-                    self.__html = self.__calculator.vandermonde(xs,ys)
-                elif self.getMethod() == 'interpolante de newton sin diferencias':
-                    self.__html = self.__calculator.interpolanteNewtonSin(xs,ys)
-                elif self.getMethod() == 'interpolante de newton':
-                    self.__html = self.__calculator.interpolanteNewton(xs,ys)
-                elif self.getMethod() == 'lagrange':
-                    self.__html = self.__calculator.lagrange(xs,ys)
-                elif self.getMethod() == 'trazadores lineales':
-                    self.__html = self.__calculator.lineal(xs,ys)
-                elif self.getMethod() == 'trazadores cuadraticos':
-                    self.__html = self.__calculator.square(xs,ys)
-                elif self.getMethod() == 'trazadores cubicos':
-                    self.__html = self.__calculator.cube(xs,ys)
+                if len(xs) != len(xs):
+                    self.__html = "El sistema es inconsistente porque el rango de xs es difrente al rango de ys"
+                else:
+                    if self.getMethod() == 'vandermonde':
+                        self.__html = self.__calculator.vandermonde(xs,ys)
+                    elif self.getMethod() == 'interpolante de newton sin diferencias':
+                        self.__html = self.__calculator.interpolanteNewtonSin(xs,ys)
+                    elif self.getMethod() == 'interpolante de newton':
+                        self.__html = self.__calculator.interpolanteNewton(xs,ys)
+                    elif self.getMethod() == 'lagrange':
+                        self.__html = self.__calculator.lagrange(xs,ys)
+                    elif self.getMethod() == 'trazadores lineales':
+                        self.__html = self.__calculator.lineal(xs,ys)
+                    elif self.getMethod() == 'trazadores cuadraticos':
+                        self.__html = self.__calculator.square(xs,ys)
+                    elif self.getMethod() == 'trazadores cubicos':
+                        self.__html = self.__calculator.cube(xs,ys)
 
         except Exception as e:
             self.__html = "</br>The data entered is inappropriate or the system of equations has no unique solution</br>"
