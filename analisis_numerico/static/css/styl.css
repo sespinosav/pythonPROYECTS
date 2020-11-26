@@ -3,7 +3,6 @@ html {
     /** para que el whidt no afecte al padding **/
     font-size: 62.5%;
     /** Reset para REMS - 62,5% = 10px de 16px **/
-    background-color: rgb(0, 0, 0);
 }
 
 *,
@@ -14,6 +13,7 @@ html {
 }
 
 body {
+    background-color: black;
     font-family: 'Lato', sans-serif;
     font-size: 1.6rem;
     line-height: 1.8;

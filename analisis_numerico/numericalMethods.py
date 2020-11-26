@@ -295,7 +295,10 @@ class NM:
         
         if "diagonal" in html:
             return html
+
         x = self.sustitucionRegresiva(Ab, len(A))
+        if type(x) == str:
+            return html + x
 
         html+="</br>Despues de aplicar sustitucion regresiva</br></br>x:</br>"
 
@@ -312,6 +315,9 @@ class NM:
 
         if "diagonal" in html:
             return html
+        
+        if type(x) == str:
+            return html + x
 
         html+="</br>Despues de aplicar sustitucion regresiva</br></br>x:</br>"
 
@@ -329,6 +335,8 @@ class NM:
             return html
 
         x = self.sustitucionRegresiva(Ab, len(A))
+        if type(x) == str:
+            return html + x
         x = self.reordenar(x, marcas)
 
         html+="</br>Despues de aplicar sustitucion regresiva</br></br>x:</br>"
@@ -355,11 +363,12 @@ class NM:
         A = [[float(i) for i in j] for j in A]
         U[0] = [i for i in A[0]]
         def factorizacionLU(A, b, n, etapa, html):
-            Ab = self.formaMatrizAumentada(A,b)                      
+            Ab, html_aux = self.formaMatrizAumentada(A,b)
+            html += f"</br>{html_aux}</br>"                      
             for k in range(n-1):
                 for i in range(k+1, n):
                     if Ab[k][k] == 0:
-                        html += f"</br>Se ha econtrado un 0 en la diagonal, en la posicion {k+1},{k+1} el método se suspende por una division por 0</br>"
+                        html += f"</br>se ha encontrado un 0 en la diagonal, en la posicion {k+1},{k+1} el método se suspende por una division por 0</br>"
                         return Ab, html
                     L[i][k] = multiplicador = Ab[i][k] / Ab[k][k]
                     for j in range(k, n+1):
@@ -399,10 +408,13 @@ class NM:
         if "diagonal" in html:
             return html
 
-        Lb = self.formaMatrizAumentada(L,b)
+        Lb, result = self.formaMatrizAumentada(L,b)
         z = self.sustitucionProgresiva(Lb,len(L))
-        Uz = self.formaMatrizAumentada(U,z)
+        Uz, result = self.formaMatrizAumentada(U,z)
         x = self.sustitucionRegresiva(Uz,len(U))
+
+        if type(x) == str:
+            return html + x
 
         html+="</br>Despues de aplicar sustitucion progresiva y regresiva</br></br>x:</br>"
 
@@ -426,7 +438,8 @@ class NM:
         A = [[float(i) for i in j] for j in A]
         U[0] = [i for i in A[0]]
         def factorizacionLU(A, b, n, etapa, html):
-            Ab = self.formaMatrizAumentada(A,b)  
+            Ab, html_aux = self.formaMatrizAumentada(A,b) 
+            html += f"</br>{html_aux}</br>" 
             marcas = [i for i in range(n)]                   
             for k in range(n-1):
                 L[k][k] = 1
@@ -436,7 +449,7 @@ class NM:
                 mults_aux = {}
                 for i in range(k+1, n):
                     if Ab[k][k] == 0:
-                        html += f"</br>Se ha econtrado un 0 en la diagonal, en la posicion {k+1},{k+1} el método se suspende por una division por 0</br>"
+                        html += f"</br>se ha encontrado un 0 en la diagonal, en la posicion {k+1},{k+1} el método se suspende por una division por 0</br>"
                         return Ab, html
                     mults_aux[(i,k)] = multiplicador = Ab[i][k] / Ab[k][k]
                     for j in range(k, n+1):
@@ -487,10 +500,13 @@ class NM:
             return html
 
         b = self.reordenar(b, marcas)
-        Lb = self.formaMatrizAumentada(L,b)
+        Lb, result = self.formaMatrizAumentada(L,b)
         z = self.sustitucionProgresiva(Lb,len(L))
-        Uz = self.formaMatrizAumentada(U,z)
+        Uz, result = self.formaMatrizAumentada(U,z)
         x = self.sustitucionRegresiva(Uz,len(U))
+
+        if type(x) == str:
+            return html + x
 
         html+="</br>Despues de aplicar sustitucion progresiva y regresiva</br></br>x:</br>"
 
@@ -512,9 +528,9 @@ class NM:
         if "diagonal" in html:
             return html
 
-        Lb = self.formaMatrizAumentada(L,b)
+        Lb, result = self.formaMatrizAumentada(L,b)
         z = self.sustitucionProgresiva(Lb,len(L))
-        Uz = self.formaMatrizAumentada(U,z)
+        Uz, result = self.formaMatrizAumentada(U,z)
         x = self.sustitucionRegresiva(Uz,len(U))
 
         html+="</br>Despues de aplicar sustitucion progresiva y regresiva</br></br>x:</br>"
@@ -538,9 +554,9 @@ class NM:
         if "diagonal" in html:
             return html
 
-        Lb = self.formaMatrizAumentada(L,b)
+        Lb, result = self.formaMatrizAumentada(L,b)
         z = self.sustitucionProgresiva(Lb,len(L))
-        Uz = self.formaMatrizAumentada(U,z)
+        Uz, result = self.formaMatrizAumentada(U,z)
         x = self.sustitucionRegresiva(Uz,len(U))
 
         html+="</br>Despues de aplicar sustitucion progresiva y regresiva</br></br>x:</br>"
@@ -566,9 +582,9 @@ class NM:
         if "diagonal" in html:
             return html
 
-        Lb = self.formaMatrizAumentada(L,b)
+        Lb, result = self.formaMatrizAumentada(L,b)
         z = self.sustitucionProgresiva(Lb,len(L))
-        Uz = self.formaMatrizAumentada(U,z)
+        Uz, result = self.formaMatrizAumentada(U,z)
         x = self.sustitucionRegresiva(Uz,len(U))
 
         html+="</br>Despues de aplicar sustitucion progresiva y regresiva</br></br>x:</br>"
@@ -607,6 +623,15 @@ class NM:
         val, ne =  np.linalg.eig(T) # T es la matriz
         sr = max(abs(val))
         html += f"</br>Radio espectral:</br>{sr}</br></br>"
+        if sr < 1:
+            html += f"El sistema converge a la solucion unica x=Tx + c ya que p(T) < 1</br></br>"
+        else:
+            html += f"El sistema no converge a la solucion unica x=Tx + c ya que p(T) >= 1</br></br>"
+
+        if self.estrictamenteDiagonalDominante(A):
+            html += f"La matriz es estrictamente diagonal dominante y por lo tanto converge para cualquier aproximacion inical x0</br></br>"
+        else:
+            html += f"La matriz no es estrictamente diagonal dominante y por lo tanto no converge para toda aproximacion inical x0</br></br>"
 
         html += f"|i|E|X|</br>"
         x1 = [0 for i in range(len(A))]
@@ -683,6 +708,16 @@ class NM:
         sr = max(abs(val))
         html += f"</br>Radio espectral:</br>{sr}</br></br>"
 
+        if sr < 1:
+            html += f"El sistema converge a la solucion unica x=Tx + c ya que p(T) < 1</br></br>"
+        else:
+            html += f"El sistema no converge a la solucion unica x=Tx + c ya que p(T) >= 1</br></br>"
+
+        if self.estrictamenteDiagonalDominante(A):
+            html += f"La matriz es estrictamente diagonal dominante y por lo tanto converge para cualquier aproximacion inical x0</br></br>"
+        else:
+            html += f"La matriz no es estrictamente diagonal dominante y por lo tanto no converge para toda aproximacion inical x0</br></br>"
+
         html += f"|i|E|X|</br>"
         x1 = [0 for i in range(len(A))]
         count = 0
@@ -756,6 +791,17 @@ class NM:
         val, ne =  np.linalg.eig(T) # T es la matriz
         sr = max(abs(val))
         html += f"</br>Radio espectral:</br>{sr}</br></br>"
+
+        if sr < 1:
+            html += f"El sistema converge a la solucion unica x=Tx + c ya que p(T) < 1</br></br>"
+        else:
+            html += f"El sistema no converge a la solucion unica x=Tx + c ya que p(T) >= 1</br></br>"
+
+        if self.estrictamenteDiagonalDominante(A):
+            html += f"La matriz es estrictamente diagonal dominante y por lo tanto converge para cualquier aproximacion inical x0</br></br>"
+        else:
+            html += f"La matriz no es estrictamente diagonal dominante y por lo tanto no converge para toda aproximacion inical x0</br></br>"
+
         x1 = [0 for i in range(len(A))]
         count = 0
         disp = Tol + 1
@@ -860,6 +906,8 @@ class NM:
         result += f"+{b[1]}*(x-{xs[0]})"
         p.append(eval("lambda x: "+result))
 
+        det = ""
+
         for n in range(2,len(ys)):
             fun = p[n-1]
             den = 1
@@ -868,11 +916,18 @@ class NM:
                 den *= (xs[n]-i)
                 coef += f"(x-{i})*"
             coef = coef[:len(coef)-1]
+            if den == 0:
+                det = f"</br>Para hayar el polinomio {n} es necesario resolver la ecuacion (y{n}-b{n-1})/{den} lo cual genera una division por cero y por tanto se suspende el metodo</br></br>"
+                break
             b.append((ys[n] - fun(xs[n]))/den)
             result += f"+{b[n]}*{coef}"
             p.append(eval("lambda x: "+result))
 
         html = "</br>Interpolante Newton (sin diferencias divididas)</br></br>Resultados:</br></br>Coeficientes del polinomio:</br></br>"
+
+        if det != "":
+            html += det
+            return html
 
         for i in b:
             html += f"{i}</br>"
@@ -1024,9 +1079,10 @@ class NM:
         return html
 
     def eliminacion(self, A, b, n, html):
-        Ab = self.formaMatrizAumentada(A,b)
-        etapa = 0
+        Ab, html_aux = self.formaMatrizAumentada(A,b)
+        html += f"</br>{html_aux}</br>"
         html+="Resultados</br></br>"
+        etapa = 0
         html+=f"Etapa {etapa}</br></br>"
         etapa += 1
         for i in A:
@@ -1036,8 +1092,8 @@ class NM:
             html += result+"</br>"
         for k in range(n-1):
             for i in range(k+1, n):
-                if Ab[k][k] == 0:
-                    html += f"</br>Se ha econtrado un 0 en la diagonal, en la posicion {k+1},{k+1} el método se suspende por una division por 0</br>"
+                if Ab[k][k] == 0.0:
+                    html += f"</br>se ha encontrado un 0 en la diagonal, en la posicion {k+1},{k+1} el método se suspende por una division por 0</br>"
                     return Ab, html
                 multiplicador = Ab[i][k] / Ab[k][k]
                 for j in range(k, n+1):
@@ -1052,9 +1108,23 @@ class NM:
         return Ab, html
 
     def formaMatrizAumentada(self,A,b):
+        import numpy as np
+        n = len(A[0])
+        for i in A:
+            if n != len(i):
+                return A, "La matriz A presenta ecuaciones con más o menos incgonitas que otras, por lo tango el sistema es inconsistente y no tiene solucion</br>"
+        ranA = np.linalg.matrix_rank(np.matrix(A))
         for a, b in zip(A, b):
             a.append(b)
-        return A
+        ranAb =  np.linalg.matrix_rank(np.matrix(A))
+        result = 'Utilizando el teorema de Rouché-Frobenius revisar en: <a href="https://es.wikipedia.org/wiki/Teorema_de_Rouch%C3%A9%E2%80%93Frobenius">teorema</a></br>'
+        if ranA == ranAb and ranAb == n:
+            result += "El rango de A es igual al rango de la matriz aumentada y el rango de A es igual al numero de incognitas, entonces el sistema es compatible determinado y por esto el sistema tiene solucion unica</br>"
+        elif ranA == ranAb and ranAb < n:
+            result += "El rango de A es igual al rango de la matriz aumentada pero el rango de la matriz aumentada es menor al numero de incognitas, entonces el sistema es compatible indeterminado y por esto el sistema tiene infinitas soluciones</br>"
+        else:
+            result += "El rango de A es menor al rango de la matriz aumentada, entonces el sistema es incompatible y no tiene solucion</br>"
+        return A, result
 
     def sustitucionProgresiva(self,Lb, n):
         x = [Lb[0][n] / Lb[0][0]]
@@ -1068,11 +1138,16 @@ class NM:
 
     def sustitucionRegresiva(self,Ab, n):
         x = [0 for i in range(n)]
+        if Ab[n-1][n-1] == 0:
+            return f"</br>Al intentar hacer sustitucion regresiva para la incognita {n-1}, se genera una división por 0, lo que indica que el sistema tiene infinitas soluciones</br>" 
         x[n-1] = Ab[n-1][n] / Ab[n-1][n-1]
         for i in range(n-1, -1, -1):
             sumatoria = 0
             for p in range(i+1, n):
                 sumatoria += Ab[i][p] * x[p]
+            if Ab[i][i] == 0:
+                print("as2<")
+                return f"</br>Al intentar hacer sustitucion regresiva para la incognita {i+1}, se genera una división por 0, lo que indica que el sistema tiene infinitas soluciones</br>"    
             x[i] = (Ab[i][n] -  sumatoria)/Ab[i][i]
         return x
 
@@ -1133,7 +1208,8 @@ class NM:
             return Ab, marcas
 
     def eliminacionGaussianaConPivoteo(self,A, b, n, html, pivoteo="parcial"):
-        Ab = self.formaMatrizAumentada(A, b)
+        Ab, html_aux = self.formaMatrizAumentada(A, b)
+        html += f"<br>{html_aux}</br>"
         if pivoteo == "parcial" or pivoteo == "parcialLU":
             if pivoteo == "parcial":
                 etapa = 0
@@ -1152,7 +1228,7 @@ class NM:
                 Ab = pivoteo(Ab, n, k)
                 for i in range(k + 1, n):
                     if Ab[k][k] == 0:
-                        html += f"</br>Se ha econtrado un 0 en la diagonal, en la posicion {k+1},{k+1} el método se suspende por una division por 0</br>"
+                        html += f"</br>se ha encontrado un 0 en la diagonal, en la posicion {k+1},{k+1} el método se suspende por una division por 0</br>"
                         return Ab, html
                     multiplicador = Ab[i][k] / Ab[k][k]
                     for j in range(k, n+1):
@@ -1182,7 +1258,7 @@ class NM:
                 Ab, marcas = pivoteo(Ab, n, k, marcas)
                 for i in range(k + 1, n):
                     if Ab[k][k] == 0:
-                        html += f"</br>Se ha econtrado un 0 en la diagonal, en la posicion {k+1},{k+1} el método se suspende por una division por 0</br>"
+                        html += f"</br>se ha encontrado un 0 en la diagonal, en la posicion {k+1},{k+1} el método se suspende por una division por 0</br>"
                         return Ab, marcas, html
                     multiplicador = Ab[i][k] / Ab[k][k]
                     for j in range(k, n+1):
@@ -1226,14 +1302,14 @@ class NM:
                     sum2 += L[i][p]*U[p][k]
                 if me == "do":
                     if U[k][k] == 0:
-                        html += f"</br>Se ha econtrado un 0 en la diagonal, en la posicion {k+1},{k+1} el método se suspende por una division por 0</br>"
+                        html += f"</br>se ha encontrado un 0 en la diagonal, en la posicion {k+1},{k+1} el método se suspende por una division por 0</br>"
                         return L, U, html 
                     L[i][k] = (A[i][k] - sum2)/U[k][k]
                 if me == "cr":
                     L[i][k] = A[i][k] - sum2
                 else:
                     if U[k][k] == 0:
-                        html += f"</br>Se ha econtrado un 0 en la diagonal, en la posicion {k+1},{k+1} el método se suspende por una division por 0</br>"
+                        html += f"</br>se ha encontrado un 0 en la diagonal, en la posicion {k+1},{k+1} el método se suspende por una division por 0</br>"
                         return L, U, html 
                     L[i][k] = (A[i][k] - sum2)/U[k][k]
             for j in range(k+1,len(A)):
@@ -1244,12 +1320,12 @@ class NM:
                     U[k][j] = A[k][j] - sum3
                 if me == "cr":
                     if L[k][k] == 0:
-                        html += f"</br>Se ha econtrado un 0 en la diagonal, en la posicion {k+1},{k+1} el método se suspende por una division por 0</br>"
+                        html += f"</br>se ha encontrado un 0 en la diagonal, en la posicion {k+1},{k+1} el método se suspende por una division por 0</br>"
                         return L, U, html         
                     U[k][j] = (A[k][j] - sum3)/L[k][k]
                 else:
                     if L[k][k] == 0:
-                        html += f"</br>Se ha econtrado un 0 en la diagonal, en la posicion {k+1},{k+1} el método se suspende por una division por 0</br>"
+                        html += f"</br>se ha encontrado un 0 en la diagonal, en la posicion {k+1},{k+1} el método se suspende por una division por 0</br>"
                         return L, U, html   
                     U[k][j] = (A[k][j] - sum3)/L[k][k]
             etapa += 1
@@ -1483,3 +1559,15 @@ class NM:
         for i in result.split(";"):
             html+=f"{i}</br>"
         return html
+
+    def estrictamenteDiagonalDominante(self,A):
+        import numpy as np
+
+        X=np.array(A)
+
+        Sum_values_in_given_row = np.sum(abs(X),axis=1)
+        if np.all(((abs(np.diag(X)))) > np.sum(abs(X),axis=1)):
+            return True
+        else:
+            return False
+        
