@@ -330,8 +330,22 @@ class NM:
         if "diagonal" in html:
             return html
         
-        if type(x) == str:
-            return html + x
+        if type(x) == str:    
+            html += x
+            x = self.infinitasSoluciones(Ab)
+            html+="</br>Ya que el sistema es compatible indeterminado, tiene infinitas soluciones y se puede respresentar con:</br></br>x:</br>"
+
+            for i in x:
+                html+=f"{i}</br></br>"
+            
+            html += "</br>con t = 0</br>x:</br>"
+
+            for i in x:
+                fun = eval(f"lambda t:{i}")
+                result = fun(0) 
+                html+=f"{result:.10f}</br>"
+
+            return html
 
         html+="</br>Despues de aplicar sustitucion regresiva</br></br>x:</br>"
 
@@ -349,12 +363,6 @@ class NM:
             return html
 
         x = self.sustitucionRegresiva(Ab, len(A))
-        if type(x) == str:
-            return html + x
-        x = self.reordenar(x, marcas)
-
-        html+="</br>Despues de aplicar sustitucion regresiva</br></br>x:</br>"
-
         if type(x) == str:    
             html += x
             x = self.infinitasSoluciones(Ab)
@@ -371,6 +379,12 @@ class NM:
                 html+=f"{result:.10f}</br>"
 
             return html
+        x = self.reordenar(x, marcas)
+
+        html+="</br>Despues de aplicar sustitucion regresiva</br></br>x:</br>"
+
+        for i in x:
+            html+=f"{i}</br>"
 
         return html
 
@@ -561,7 +575,7 @@ class NM:
                 fun = eval(f"lambda t:{i}")
                 result = fun(0) 
                 html+=f"{result:.10f}</br>"
-                return html
+            return html
 
         html+="</br>Despues de aplicar sustitucion progresiva y regresiva</br></br>x:</br>"
 
