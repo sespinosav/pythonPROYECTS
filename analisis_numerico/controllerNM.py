@@ -6,128 +6,139 @@ class ControllerNM:
         self.__calculator = calculator
 
     def setUp(self, data):
+        from time import time
+        self.__start_time = time()
+        """
         try:
-            if self.getCategory() == 0:
-                f = eval("lambda x:"+data['f'])
-                x0 = eval(data['x0'])
-                delta = eval(data['delta'])
-                niter = eval(data['niter'])
-                self.__html = self.__calculator.busquedasIncrementales(f,x0,delta,niter)
+        """
+        if self.getCategory() == 0:
+            f = eval("lambda x:"+data['f'])
+            x0 = eval(data['x0'])
+            delta = eval(data['delta'])
+            niter = eval(data['niter'])
+            self.__html = self.__calculator.busquedasIncrementales(f,x0,delta,niter)
 
-            elif self.getCategory() == 1:
-                f = eval("lambda x:"+data['f'])
-                xi = eval(data['xi'])
-                xs = eval(data['xs'])
-                tolerance = eval(data['tolerance'])
-                niter = eval(data['niter'])
-                if self.getMethod() == 'biseccion':
-                    self.__html = self.__calculator.biseccion(f,xi,xs,tolerance,niter)
-                elif self.getMethod() == 'regla falsa':
-                    self.__html = self.__calculator.reglaFalsa(f,xi,xs,tolerance,niter)
-                else:
-                    print('melo')
-                    self.__html = self.__calculator.secante(f,xi,xs,tolerance,niter)
+        elif self.getCategory() == 1:
+            f = eval("lambda x:"+data['f'])
+            xi = eval(data['xi'])
+            xs = eval(data['xs'])
+            tolerance = eval(data['tolerance'])
+            niter = eval(data['niter'])
+            if self.getMethod() == 'biseccion':
+                self.__html = self.__calculator.biseccion(f,xi,xs,tolerance,niter)
+            elif self.getMethod() == 'regla falsa':
+                self.__html = self.__calculator.reglaFalsa(f,xi,xs,tolerance,niter)
+            else:
+                print('melo')
+                self.__html = self.__calculator.secante(f,xi,xs,tolerance,niter)
 
-            elif self.getCategory() == 2:
-                f = eval("lambda x:"+data['f'])
-                df = eval("lambda x:"+data['df'])
-                tol = eval(data['tol'])
-                x0 = eval(data['x0'])
-                tol = eval(data['tol'])
-                niter = eval(data['niter'])
-                self.__html =  self.__calculator.newton(f,df,tol,x0,niter)
-            
-            elif self.getCategory() == 3:
-                f = eval("lambda x:"+data['f'])
-                g = eval("lambda x:"+data['g'])
-                tole = eval(data['tole'])
-                xa = eval(data['xa'])
-                niter = eval(data['niter'])
-                self.__html = self.__calculator.puntoFijo(f,g,tole,xa,niter)
-            
-            elif self.getCategory() == 4:
-                f = eval("lambda x:"+data['f'])
-                df = eval("lambda x:"+data['df'])
-                df2 = eval("lambda x:"+data['df2'])
-                tol = eval(data['tol'])
-                x0 = eval(data['x0'])
-                niter = eval(data['niter'])
-                self.__html = self.__calculator.raicesMultiples(f,df,df2,tol,x0,niter)
+        elif self.getCategory() == 2:
+            f = eval("lambda x:"+data['f'])
+            df = eval("lambda x:"+data['df'])
+            tol = eval(data['tol'])
+            x0 = eval(data['x0'])
+            tol = eval(data['tol'])
+            niter = eval(data['niter'])
+            self.__html =  self.__calculator.newton(f,df,tol,x0,niter)
+        
+        elif self.getCategory() == 3:
+            f = eval("lambda x:"+data['f'])
+            g = eval("lambda x:"+data['g'])
+            tole = eval(data['tole'])
+            xa = eval(data['xa'])
+            niter = eval(data['niter'])
+            self.__html = self.__calculator.puntoFijo(f,g,tole,xa,niter)
+        
+        elif self.getCategory() == 4:
+            f = eval("lambda x:"+data['f'])
+            df = eval("lambda x:"+data['df'])
+            df2 = eval("lambda x:"+data['df2'])
+            tol = eval(data['tol'])
+            x0 = eval(data['x0'])
+            niter = eval(data['niter'])
+            self.__html = self.__calculator.raicesMultiples(f,df,df2,tol,x0,niter)
 
 
-            elif self.getCategory() == 5:
-                A = eval(data['A'])
-                b = self.tranfB(eval(data['b']))
-                if len(A) != len(b):
-                    self.__html = "</br>La matriz A y el arreglo b tienen diferentes tamaños  (n), por consiguiente no se pueden utilizar para ejecutar el método</br></b>"
-                else:
-                    if self.getMethod() == 'eliminacion gaussiana simple':
-                        self.__html = self.__calculator.eliminacionSimple(A,b)
-                    elif self.getMethod() == 'eliminacion gaussiana con pivoteo parcial':
-                        self.__html = self.__calculator.eliminacionParcial(A,b)
-                    elif self.getMethod() == 'eliminacion gaussiana con pivoteo total':
-                        self.__html = self.__calculator.eliminacionTotal(A,b)
-                    elif self.getMethod() == 'lu simple':
-                        self.__html = self.__calculator.luSimple(A,b)
-                    elif self.getMethod() == 'lu parcial':
-                        self.__html = self.__calculator.luParcial(A,b)
-                    elif self.getMethod() == 'crout':
-                        self.__html = self.__calculator.crout(A,b)
-                    elif self.getMethod() == 'doolittle':
-                        self.__html = self.__calculator.doolittle(A,b)
-                    elif self.getMethod() == 'cholesky':
-                        self.__html = self.__calculator.cholesky(A,b)
-            
-            elif self.getCategory() == 6:
-                A = eval(data['A'])
-                b = self.tranfB(eval(data['b']))
-                x0 = self.tranfB(eval(data['x0']))
+        elif self.getCategory() == 5:
+            A = eval(data['A'])
+            b = self.tranfB(eval(data['b']))
+            if len(A) != len(b):
+                self.__html = "</br>La matriz A y el arreglo b tienen diferentes tamaños  (n), por consiguiente no se pueden utilizar para ejecutar el método</br></b>"
+            elif len(A[0]) != len(A):
+                self.__html = "</br>La matriz ingresada no es cuadrada y el metodo solo funciona con matrizes cuadradas</br>"
+            else:
+                if self.getMethod() == 'eliminacion gaussiana simple':
+                    self.__html = self.__calculator.eliminacionSimple(A,b)
+                elif self.getMethod() == 'eliminacion gaussiana con pivoteo parcial':
+                    self.__html = self.__calculator.eliminacionParcial(A,b)
+                elif self.getMethod() == 'eliminacion gaussiana con pivoteo total':
+                    self.__html = self.__calculator.eliminacionTotal(A,b)
+                elif self.getMethod() == 'lu simple':
+                    self.__html = self.__calculator.luSimple(A,b)
+                elif self.getMethod() == 'lu parcial':
+                    self.__html = self.__calculator.luParcial(A,b)
+                elif self.getMethod() == 'crout':
+                    self.__html = self.__calculator.crout(A,b)
+                elif self.getMethod() == 'doolittle':
+                    self.__html = self.__calculator.doolittle(A,b)
+                elif self.getMethod() == 'cholesky':
+                    self.__html = self.__calculator.cholesky(A,b)
+        
+        elif self.getCategory() == 6:
+            A = eval(data['A'])
+            b = self.tranfB(eval(data['b']))
+            x0 = self.tranfB(eval(data['x0']))
+            tol = eval(data['Tol'])
+            Nmax = eval(data['Nmax'])
+            if len(A) != len(b):
+                self.__html = "</br>La matriz A y el arreglo b tienen diferentes tamaños  (n), por consiguiente no se pueden utilizar para ejecutar el método</br>"
+            elif len(A[0]) != len(A):
+                self.__html = "</br>La matriz ingresada no es cuadrada y el metodo solo funciona con matrizes cuadradas</br>"
+            else:
+                if self.getMethod() == 'jacobi':
+                    self.__html = self.__calculator.jacobi(A,b,x0,tol,Nmax)
+                elif self.getMethod() == 'gauss seidel':
+                    self.__html = self.__calculator.gaussSeidel(A,b,x0,tol,Nmax)
+
+        elif self.getCategory() == 7:
+            A = eval(data['A'])
+            b = self.tranfB(eval(data['b']))
+            x0 = self.tranfB(eval(data['x0']))
+            if len(A) != len(b):
+                self.__html = "</br>La matriz A y el arreglo b tienen diferentes tamaños  (n), por consiguiente no se pueden utilizar para ejecutar el método</br>"
+            elif len(A[0]) != len(A):
+                self.__html = "</br>La matriz ingresada no es cuadrada y el metodo solo funciona con matrizes cuadradas</br>"
+            else:
                 tol = eval(data['Tol'])
+                w = eval(data['w'])
                 Nmax = eval(data['Nmax'])
-                if len(A) != len(b):
-                    self.__html = "</br>La matriz A y el arreglo b tienen diferentes tamaños  (n), por consiguiente no se pueden utilizar para ejecutar el método</br>"
-                else:
-                    if self.getMethod() == 'jacobi':
-                        self.__html = self.__calculator.jacobi(A,b,x0,tol,Nmax)
-                    elif self.getMethod() == 'gauss seidel':
-                        self.__html = self.__calculator.gaussSeidel(A,b,x0,tol,Nmax)
-
-            elif self.getCategory() == 7:
-                A = eval(data['A'])
-                b = self.tranfB(eval(data['b']))
-                x0 = self.tranfB(eval(data['x0']))
-                if len(A) != len(b):
-                    self.__html = "</br>La matriz A y el arreglo b tienen diferentes tamaños  (n), por consiguiente no se pueden utilizar para ejecutar el método</br>"
-                else:
-                    tol = eval(data['Tol'])
-                    w = eval(data['w'])
-                    Nmax = eval(data['Nmax'])
-                    self.__html = self.__calculator.sor(A,b,x0,tol,w,Nmax)
-            
-            elif self.getCategory() == 8:
-                xs = self.tranfB(eval(data['xs']))
-                ys = self.tranfB(eval(data['ys']))
-                if len(xs) != len(xs):
-                    self.__html = "</br>El tamaño de los datos de x es diferente al tamaño de los datos de y, por lo tanto no se puedenn utilizar estos datos para ejecutar el método</br>"
-                else:
-                    if self.getMethod() == 'vandermonde':
-                        self.__html = self.__calculator.vandermonde(xs,ys)
-                    elif self.getMethod() == 'interpolante de newton sin diferencias':
-                        self.__html = self.__calculator.interpolanteNewtonSin(xs,ys)
-                    elif self.getMethod() == 'interpolante de newton':
-                        self.__html = self.__calculator.interpolanteNewton(xs,ys)
-                    elif self.getMethod() == 'lagrange':
-                        self.__html = self.__calculator.lagrange(xs,ys)
-                    elif self.getMethod() == 'trazadores lineales':
-                        self.__html = self.__calculator.lineal(xs,ys)
-                    elif self.getMethod() == 'trazadores cuadraticos':
-                        self.__html = self.__calculator.square(xs,ys)
-                    elif self.getMethod() == 'trazadores cubicos':
-                        self.__html = self.__calculator.cube(xs,ys)
-
+                self.__html = self.__calculator.sor(A,b,x0,tol,w,Nmax)
+        
+        elif self.getCategory() == 8:
+            xs = self.tranfB(eval(data['xs']))
+            ys = self.tranfB(eval(data['ys']))
+            if len(xs) != len(xs):
+                self.__html = "</br>El tamaño de los datos de x es diferente al tamaño de los datos de y, por lo tanto no se puedenn utilizar estos datos para ejecutar el método</br>"
+            else:
+                if self.getMethod() == 'vandermonde':
+                    self.__html = self.__calculator.vandermonde(xs,ys)
+                elif self.getMethod() == 'interpolante de newton sin diferencias':
+                    self.__html = self.__calculator.interpolanteNewtonSin(xs,ys)
+                elif self.getMethod() == 'interpolante de newton':
+                    self.__html = self.__calculator.interpolanteNewton(xs,ys)
+                elif self.getMethod() == 'lagrange':
+                    self.__html = self.__calculator.lagrange(xs,ys)
+                elif self.getMethod() == 'trazadores lineales':
+                    self.__html = self.__calculator.lineal(xs,ys)
+                elif self.getMethod() == 'trazadores cuadraticos':
+                    self.__html = self.__calculator.square(xs,ys)
+                elif self.getMethod() == 'trazadores cubicos':
+                    self.__html = self.__calculator.cube(xs,ys)
+        """
         except Exception as e:
             self.__html = "</br>los datos ingresados son inapropiados o el sistema no tiene solución única</br>"
             self.__html += f"El error generado es: {e}"
+        """
 
     def setMethod(self, method):
         if method:
@@ -189,7 +200,9 @@ class ControllerNM:
             return 8
 
     def getHtml(self):
-        return self.__html
+        from time import time
+        end_time = time() - self.__start_time
+        return self.__html + f"</br>el tiempo de ejecución del metodo fue de: {end_time:.10f} segundos</br>"
 
     def tranfB(self,b):
         result = []

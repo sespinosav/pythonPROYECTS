@@ -297,8 +297,22 @@ class NM:
             return html
 
         x = self.sustitucionRegresiva(Ab, len(A))
-        if type(x) == str:
-            return html + x
+        if type(x) == str:    
+            html += x
+            x = self.infinitasSoluciones(Ab)
+            html+="</br>Ya que el sistema es compatible indeterminado, tiene infinitas soluciones y se puede respresentar con:</br></br>x:</br>"
+
+            for i in x:
+                html+=f"{i}</br></br>"
+            
+            html += "</br>con t = 0</br>x:</br>"
+
+            for i in x:
+                fun = eval(f"lambda t:{i}")
+                result = fun(0) 
+                html+=f"{result:.10f}</br>"
+
+            return html
 
         html+="</br>Despues de aplicar sustitucion regresiva</br></br>x:</br>"
 
@@ -941,10 +955,15 @@ class NM:
         
         html = "</br>Interpolante de Newton</br></br>Resultados:</br>"
 
+        det = ""
+
         for i in range(len(ys)):
             row = [xs[i], ys[i]]
             index = 1
             for j in range(2,i+2):
+                if (xs[i-index] - xs[i]) == 0:
+                    det = "</br>se han ingresado dos puntos x iguales, esto genera que a la hora de buscar los polinomios exista una división por 0 y debido a esto el método no termina de ejecutarse</br>"
+                    break
                 row.append((table[i-1][j-1] - row[len(row)-1])
                             /
                             (xs[i-index] - xs[i]))
@@ -961,6 +980,10 @@ class NM:
                 result+="------------------"
             size -= 1
             html+=result+"</br>"
+
+        if det != "":
+            html += det
+            return html
 
         result = ""
         html+="</br>Coeficientes del polinomio:</br></br>"
@@ -982,6 +1005,8 @@ class NM:
     def lagrange(self,xs,ys):
         b = []
 
+        det = ""
+
         html="</br>Lagrange</br></br>Resultados:</br></br>Polinomios interpolantes:</br></br>"
         expresion = ""
         result = 1
@@ -993,6 +1018,9 @@ class NM:
                     result *= i - k  
             polim = polim[0:len(polim)-1]
             html+=f"{polim[1:]}</br>"
+            if (xs[i-index] - xs[i]) == 0:
+                det = "</br>se han ingresado dos puntos x iguales, esto genera que a la hora de buscar los polinomios exista una división por 0 y debido a esto el método no termina de ejecutarse</br>"
+                break
             result = 1/result
             result = ys[xs.index(i)]*result
             b.append(result)
@@ -1000,6 +1028,9 @@ class NM:
             polim = "*"
             result = 1
         expresion = expresion[0:len(expresion)-1]
+
+        if det != "":
+            return html + det
 
         html+="</br>Coeficientes del polinomio:</br></br>"
         for i in b:
@@ -1110,9 +1141,12 @@ class NM:
     def formaMatrizAumentada(self,A,b):
         import numpy as np
         n = len(A[0])
+        print(A)
+        det =  np.linalg.det(np.array(A))
+
         for i in A:
             if n != len(i):
-                return A, "La matriz A presenta ecuaciones con más o menos incgonitas que otras, por lo tango el sistema es inconsistente y no tiene solucion</br>"
+                return A, "La matriz A presenta ecuaciones con más o menos incognitas que otras, por lo tango el sistema es inconsistente y no tiene solucion</br>"
         ranA = np.linalg.matrix_rank(np.matrix(A))
         for a, b in zip(A, b):
             a.append(b)
@@ -1121,7 +1155,7 @@ class NM:
         if ranA == ranAb and ranAb == n:
             result += "El rango de A es igual al rango de la matriz aumentada y el rango de A es igual al numero de incognitas, entonces el sistema es compatible determinado y por esto el sistema tiene solucion unica</br>"
         elif ranA == ranAb and ranAb < n:
-            result += "El rango de A es igual al rango de la matriz aumentada pero el rango de la matriz aumentada es menor al numero de incognitas, entonces el sistema es compatible indeterminado y por esto el sistema tiene infinitas soluciones</br>"
+            result += f"El rango de A es igual al rango de la matriz aumentada pero el rango de la matriz aumentada es menor al numero de incognitas, entonces el sistema es compatible indeterminado y por esto el sistema tiene infinitas soluciones, además el determinante de la matriz es {det} y por eso el método no converge</br>"
         else:
             result += "El rango de A es menor al rango de la matriz aumentada, entonces el sistema es incompatible y no tiene solucion</br>"
         return A, result
@@ -1139,15 +1173,14 @@ class NM:
     def sustitucionRegresiva(self,Ab, n):
         x = [0 for i in range(n)]
         if Ab[n-1][n-1] == 0:
-            return f"</br>Al intentar hacer sustitucion regresiva para la incognita {n-1}, se genera una división por 0, lo que indica que el sistema tiene infinitas soluciones</br>" 
+            return f"</br>Al intentar hacer sustitucion regresiva, se genera una división por 0, lo que indica que el sistema tiene infinitas soluciones</br>" 
         x[n-1] = Ab[n-1][n] / Ab[n-1][n-1]
         for i in range(n-1, -1, -1):
             sumatoria = 0
             for p in range(i+1, n):
                 sumatoria += Ab[i][p] * x[p]
             if Ab[i][i] == 0:
-                print("as2<")
-                return f"</br>Al intentar hacer sustitucion regresiva para la incognita {i+1}, se genera una división por 0, lo que indica que el sistema tiene infinitas soluciones</br>"    
+                return f"</br>Al intentar hacer sustitucion regresiva, se genera una división por 0, lo que indica que el sistema tiene infinitas soluciones</br>"    
             x[i] = (Ab[i][n] -  sumatoria)/Ab[i][i]
         return x
 
@@ -1570,4 +1603,17 @@ class NM:
             return True
         else:
             return False
-        
+    
+    def infinitasSoluciones(self,Ab):
+        x = []
+        x.append("t")
+        for i in range(len(Ab)-2,-1,-1):
+            result = f"{Ab[i][len(Ab)]}"
+            index = len(Ab)-1
+            for j in x:
+                result += f"-{Ab[i][index]}*{j}"
+                index -= 1
+            result = f"({result})/{Ab[i][i]}"
+            x.append(result)
+        return x[::-1]
+                
