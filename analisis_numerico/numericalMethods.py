@@ -547,7 +547,7 @@ class NM:
         Uz, result = self.formaMatrizAumentada(U,z)
         x = self.sustitucionRegresiva(Uz,len(U))
 
-        if type(x) == str:    
+        if type(x) ==  str:    
             html += x
             x = self.infinitasSoluciones(Ab)
             html+="</br>Ya que el sistema es compatible indeterminado, tiene infinitas soluciones y se puede respresentar con:</br></br>x:</br>"
@@ -561,8 +561,7 @@ class NM:
                 fun = eval(f"lambda t:{i}")
                 result = fun(0) 
                 html+=f"{result:.10f}</br>"
-
-            return html
+                return html
 
         html+="</br>Despues de aplicar sustitucion progresiva y regresiva</br></br>x:</br>"
 
