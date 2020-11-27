@@ -355,8 +355,22 @@ class NM:
 
         html+="</br>Despues de aplicar sustitucion regresiva</br></br>x:</br>"
 
-        for i in x:
-            html+=f"{i}</br>"
+        if type(x) == str:    
+            html += x
+            x = self.infinitasSoluciones(Ab)
+            html+="</br>Ya que el sistema es compatible indeterminado, tiene infinitas soluciones y se puede respresentar con:</br></br>x:</br>"
+
+            for i in x:
+                html+=f"{i}</br></br>"
+            
+            html += "</br>con t = 0</br>x:</br>"
+
+            for i in x:
+                fun = eval(f"lambda t:{i}")
+                result = fun(0) 
+                html+=f"{result:.10f}</br>"
+
+            return html
 
         return html
 
@@ -427,8 +441,22 @@ class NM:
         Uz, result = self.formaMatrizAumentada(U,z)
         x = self.sustitucionRegresiva(Uz,len(U))
 
-        if type(x) == str:
-            return html + x
+        if type(x) == str:    
+            html += x
+            x = self.infinitasSoluciones(Ab)
+            html+="</br>Ya que el sistema es compatible indeterminado, tiene infinitas soluciones y se puede respresentar con:</br></br>x:</br>"
+
+            for i in x:
+                html+=f"{i}</br></br>"
+            
+            html += "</br>con t = 0</br>x:</br>"
+
+            for i in x:
+                fun = eval(f"lambda t:{i}")
+                result = fun(0) 
+                html+=f"{result:.10f}</br>"
+
+            return html
 
         html+="</br>Despues de aplicar sustitucion progresiva y regresiva</br></br>x:</br>"
 
@@ -519,8 +547,22 @@ class NM:
         Uz, result = self.formaMatrizAumentada(U,z)
         x = self.sustitucionRegresiva(Uz,len(U))
 
-        if type(x) == str:
-            return html + x
+        if type(x) == str:    
+            html += x
+            x = self.infinitasSoluciones(Ab)
+            html+="</br>Ya que el sistema es compatible indeterminado, tiene infinitas soluciones y se puede respresentar con:</br></br>x:</br>"
+
+            for i in x:
+                html+=f"{i}</br></br>"
+            
+            html += "</br>con t = 0</br>x:</br>"
+
+            for i in x:
+                fun = eval(f"lambda t:{i}")
+                result = fun(0) 
+                html+=f"{result:.10f}</br>"
+
+            return html
 
         html+="</br>Despues de aplicar sustitucion progresiva y regresiva</br></br>x:</br>"
 
@@ -1155,7 +1197,7 @@ class NM:
         if ranA == ranAb and ranAb == n:
             result += "El rango de A es igual al rango de la matriz aumentada y el rango de A es igual al numero de incognitas, entonces el sistema es compatible determinado y por esto el sistema tiene solucion unica</br>"
         elif ranA == ranAb and ranAb < n:
-            result += f"El rango de A es igual al rango de la matriz aumentada pero el rango de la matriz aumentada es menor al numero de incognitas, entonces el sistema es compatible indeterminado y por esto el sistema tiene infinitas soluciones, además el determinante de la matriz es {det} y por eso el método no converge</br>"
+            result += f"El rango de A es igual al rango de la matriz aumentada pero el rango de la matriz aumentada es menor al numero de incognitas, entonces el sistema es compatible indeterminado y por esto el sistema tiene infinitas soluciones, además el determinante de la matriz es {det:.5f} y por eso el método no converge</br>"
         else:
             result += "El rango de A es menor al rango de la matriz aumentada, entonces el sistema es incompatible y no tiene solucion</br>"
         return A, result
