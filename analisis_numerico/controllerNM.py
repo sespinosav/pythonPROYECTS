@@ -6,12 +6,9 @@ class ControllerNM:
         self.__calculator = calculator
 
     def setUp(self, data):
+        from time import time
+        self.__start_time = time()
         try:
-            from time import time
-            self.__start_time = time()
-            """
-            try:
-            """
             if self.getCategory() == 0:
                 f = eval("lambda x:"+data['f'])
                 x0 = eval(data['x0'])
@@ -136,7 +133,7 @@ class ControllerNM:
                     elif self.getMethod() == 'trazadores cubicos':
                         self.__html = self.__calculator.cube(xs,ys)
         except Exception as e:
-            self.__html = "</br>los datos ingresados son inapropiados o el sistema no tiene solución única</br></br>"
+            self.__html = "</br>los datos ingresados son inapropiados o el sistema no tiene solución</br></br>"
             self.__html += f"El error generado es: {e}"
 
     def setMethod(self, method):
