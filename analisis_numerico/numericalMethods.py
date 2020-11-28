@@ -328,6 +328,8 @@ class NM:
                 return "</br></br>El método se detuvo porque se está evaluando un punto que no está en el dominio de la función</br>"
             elif str(e) == 'division float':
                 return "</br></br>El método se detuvo por que se generó una división por cero al evaluar la funcion o las derivadas en un punto</br>"
+            else:
+                html + "a"
         
         return html
 
@@ -337,6 +339,9 @@ class NM:
         Ab, html = self.eliminacion(A,b,len(A),html)
         
         if "diagonal" in html:
+            return html
+        
+        if "no tiene solucion" in html:
             return html
 
         x = self.sustitucionRegresiva(Ab, len(A))
@@ -372,6 +377,9 @@ class NM:
 
         if "diagonal" in html:
             return html
+
+        if "no tiene solucion" in html:
+            return html
         
         if type(x) == str:    
             html += x
@@ -405,6 +413,8 @@ class NM:
         if "diagonal" in html:
             return html
 
+        if "no tiene solucion" in html:
+            return html
         x = self.sustitucionRegresiva(Ab, len(A))
         if type(x) == str:    
             html += x
@@ -491,6 +501,9 @@ class NM:
         Ab, html  = factorizacionLU(A,b, len(A),etapa,html)
 
         if "diagonal" in html:
+            return html
+        
+        if "no tiene solucion" in html:
             return html
 
         Lb, result = self.formaMatrizAumentada(L,b)
@@ -597,6 +610,9 @@ class NM:
 
         if "diagonal" in html:
             return html
+        
+        if "no tiene solucion" in html:
+            return html
 
         b = self.reordenar(b, marcas)
         Lb, result = self.formaMatrizAumentada(L,b)
@@ -639,6 +655,9 @@ class NM:
 
         if "diagonal" in html:
             return html
+        
+        if "no tiene solucion" in html:
+            return html
 
         Lb, result = self.formaMatrizAumentada(L,b)
         z = self.sustitucionProgresiva(Lb,len(L))
@@ -664,6 +683,9 @@ class NM:
 
         L, U, html = self.factorizacionDirecta(A,etapa,html,"do")
         if "diagonal" in html:
+            return html
+
+        if "no tiene solucion" in html:
             return html
 
         Lb, result = self.formaMatrizAumentada(L,b)
@@ -692,6 +714,8 @@ class NM:
         if "imaginarios" in html:
             return html
         if "diagonal" in html:
+            return html
+        if "no tiene solucion" in html:
             return html
 
         Lb, result = self.formaMatrizAumentada(L,b)
@@ -998,6 +1022,9 @@ class NM:
         Ab, marcas, b = self.eliminacionGaussianaConPivoteo(A, b, len(A),html,"")
 
         if "diagonal" in html:
+            return html
+        
+        if "no tiene solucion" in html:
             return html
         x = self.sustitucionRegresiva(Ab, len(A))
         infinit = False
