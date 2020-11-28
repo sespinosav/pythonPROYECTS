@@ -740,7 +740,7 @@ class NM:
         for i in range(len(A)):
             coef = 0
             if A[i][i] == 0:
-                return html+"</br>Existe un 0 en la diagonal, en la posicion {i+1},{i+1} lo que genera una división por cero cuando se desea contruir la matriz C</br>"
+                return html+f"</br>Existe un 0 en la diagonal, en la posicion {i+1},{i+1} lo que genera una división por cero cuando se desea contruir la matriz C</br>"
             C.append((1/A[i][i])*b[i])
             coef = -(1/A[i][i])
             for j in range(len(A)):
