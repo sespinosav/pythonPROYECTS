@@ -30,99 +30,112 @@ class NM:
     def biseccion(self,f,xi,xs,tolerance,niter):
         html="</br>Biseccion</br></br>Tabla de resultados:</br>|i|********a********|********xm*******|********b********|******f(Xm)*******|********E********|</br>"
 
-        fxi = f(xi)
-        fxs = f(xs)
+        try:
+            fxi = f(xi)
+            fxs = f(xs)
 
-        if fxi == 0:
-            html+=f"{xi} es una raiz</br>"
-        elif fxs == 0:
-            html+=f"{xs} es una raiz</br>"
-        elif (fxi * fxs) < 0:
-            xm = (xi + xs) / 2
-            fxm = f(xm)
-            count = 1
-            error = tolerance + 1
-
-            while (error > tolerance) and (fxm != 0) and (count < niter):
-                if error == tolerance + 1:
-                    html+=f" {count}  {xi:.10e}  {xm:.10e}  {xs:.10e}  {fxm:.10e}||-----------------</br>".replace(" ","|")
-                else:
-                    if count < 10:
-                        html+=f" {count}  {xi:.10e}  {xm:.10e}  {xs:.10e}  {fxm:.10e}  {error:.10e}</br>".replace(" ","|")
-                    else:
-                        html+=f" {count} {xi:.10e}  {xm:.10e}  {xs:.10e}  {fxm:.10e}  {error:.10e}</br>".replace(" ","|")
-                if (fxi * fxm) < 0:
-                    xs = xm
-                    fxs = fxm
-                else:
-                    xi = xm
-                    fxi = fxm
-                xaux = xm
+            if fxi == 0:
+                html+=f"{xi} es una raiz</br>"
+            elif fxs == 0:
+                html+=f"{xs} es una raiz</br>"
+            elif (fxi * fxs) < 0:
                 xm = (xi + xs) / 2
                 fxm = f(xm)
-                error = abs((xm - xaux))
-                count += 1
-            if count < 10:
-                html+=f" {count}  {xi:.10e}  {xm:.10e}  {xs:.10e}  {fxm:.10e}  {error:.10e}</br>".replace(" ","|")
+                count = 1
+                error = tolerance + 1
+
+                while (error > tolerance) and (fxm != 0) and (count < niter):
+                    if error == tolerance + 1:
+                        html+=f" {count}  {xi:.10e}  {xm:.10e}  {xs:.10e}  {fxm:.10e}||-----------------</br>".replace(" ","|")
+                    else:
+                        if count < 10:
+                            html+=f" {count}  {xi:.10e}  {xm:.10e}  {xs:.10e}  {fxm:.10e}  {error:.10e}</br>".replace(" ","|")
+                        else:
+                            html+=f" {count} {xi:.10e}  {xm:.10e}  {xs:.10e}  {fxm:.10e}  {error:.10e}</br>".replace(" ","|")
+                    if (fxi * fxm) < 0:
+                        xs = xm
+                        fxs = fxm
+                    else:
+                        xi = xm
+                        fxi = fxm
+                    xaux = xm
+                    xm = (xi + xs) / 2
+                    fxm = f(xm)
+                    error = abs((xm - xaux))
+                    count += 1
+                if count < 10:
+                    html+=f" {count}  {xi:.10e}  {xm:.10e}  {xs:.10e}  {fxm:.10e}  {error:.10e}</br>".replace(" ","|")
+                else:
+                    html+=f" {count} {xi:.10e}  {xm:.10e}  {xs:.10e}  {fxm:.10e}  {error:.10e}</br>".replace(" ","|")
+                if fxm == 0:
+                    html+=f"{xm} es raiz</br>"
+                elif error < tolerance:
+                    html+=f"{xm} es aproximacion a una raiz con una tolerancia: {tolerance}</br>"
+                else:
+                    html+=f"Fracaso en {niter} iteracciones</br>"
             else:
-                html+=f" {count} {xi:.10e}  {xm:.10e}  {xs:.10e}  {fxm:.10e}  {error:.10e}</br>".replace(" ","|")
-            if fxm == 0:
-                html+=f"{xm} es raiz</br>"
-            elif error < tolerance:
-                html+=f"{xm} es aproximacion a una raiz con una tolerancia: {tolerance}</br>"
-            else:
-                html+=f"Fracaso en {niter} iteracciones</br>"
-        else:
-            html+="El intervalo es inedacuado</br>"
+                html+="El intervalo es inedacuado</br>"
+        except Exception as e:
+            if str(e) == 'math domain error':
+                return "</br></br>El método se detuvo porque se está evaluando un punto que no está en el dominio de la función</br>"
+            elif str(e) == 'division float':
+                return "</br></br>El método se detuvo por que se generó una división por cero al evaluar la funcion o la derivada en un punto</br>"
         return html
 
     def reglaFalsa(self,f,xi,xs,tolerance,niter):
         html = "</br>Regla Falsa</br></br>Tabla de resultados:</br>|i|********a********|********xm*******|********b********|******f(Xm)*******|********E********|</br>"
 
-        fxi = f(xi)
-        fxs = f(xs)
+        try:
+            fxi = f(xi)
+            fxs = f(xs)
 
-        if fxi == 0:
-            html+=f"{xi} es una raiz</br>"
-        elif fxs == 0:
-            html+=f"{xs} es una raiz</br>"
-        elif (fxi * fxs) < 0:
-            xm = (xi) - ((fxi*(xs-xi)) / (fxs-fxi))
-            fxm = f(xm)
-            count = 1
-            error = tolerance + 1
-
-            while (error > tolerance) and (fxm != 0) and (count < niter):
-                if error == tolerance + 1:
-                    html+=f" {count}  {xi:.10e}  {xm:.10e}  {xs:.10e}  {fxm:.10e}||-----------------</br>".replace(" ","|")
-                else:
-                    if count < 10:
-                        html+=f" {count}  {xi:.10e}  {xm:.10e}  {xs:.10e}  {fxm:.10e}  {error:.10e}</br>".replace(" ","|")
-                    else:
-                        html+=f" {count} {xi:.10e}  {xm:.10e}  {xs:.10e}  {fxm:.10e}  {error:.10e}</br>".replace(" ","|")
-                if (fxi * fxm) < 0:
-                    xs = xm
-                    fxs = fxm
-                else:
-                    xi = xm
-                    fxi = fxm
-                xaux = xm
+            if fxi == 0:
+                html+=f"{xi} es una raiz</br>"
+            elif fxs == 0:
+                html+=f"{xs} es una raiz</br>"
+            elif (fxi * fxs) < 0:
                 xm = (xi) - ((fxi*(xs-xi)) / (fxs-fxi))
                 fxm = f(xm)
-                error = abs(xm - xaux)
-                count += 1
-            if count < 10:
-                html+=f" {count}  {xi:.10e}  {xm:.10e}  {xs:.10e}  {fxm:.10e}  {error:.10e}</br>".replace(" ","|")
+                count = 1
+                error = tolerance + 1
+
+                while (error > tolerance) and (fxm != 0) and (count < niter):
+                    if error == tolerance + 1:
+                        html+=f" {count}  {xi:.10e}  {xm:.10e}  {xs:.10e}  {fxm:.10e}||-----------------</br>".replace(" ","|")
+                    else:
+                        if count < 10:
+                            html+=f" {count}  {xi:.10e}  {xm:.10e}  {xs:.10e}  {fxm:.10e}  {error:.10e}</br>".replace(" ","|")
+                        else:
+                            html+=f" {count} {xi:.10e}  {xm:.10e}  {xs:.10e}  {fxm:.10e}  {error:.10e}</br>".replace(" ","|")
+                    if (fxi * fxm) < 0:
+                        xs = xm
+                        fxs = fxm
+                    else:
+                        xi = xm
+                        fxi = fxm
+                    xaux = xm
+                    xm = (xi) - ((fxi*(xs-xi)) / (fxs-fxi))
+                    fxm = f(xm)
+                    error = abs(xm - xaux)
+                    count += 1
+                if count < 10:
+                    html+=f" {count}  {xi:.10e}  {xm:.10e}  {xs:.10e}  {fxm:.10e}  {error:.10e}</br>".replace(" ","|")
+                else:
+                    html+=f" {count} {xi:.10e}  {xm:.10e}  {xs:.10e}  {fxm:.10e}  {error:.10e}</br>".replace(" ","|")
+                if fxm == 0:
+                    html+=f"{xm} es raiz</br>"
+                elif error < tolerance:
+                    html+=f"{xm} es aproximacion a una raiz con una tolerancia: {tolerance}</br>"
+                else:
+                    html+=f"Fracaso en {niter} iteracciones</br>"
             else:
-                html+=f" {count} {xi:.10e}  {xm:.10e}  {xs:.10e}  {fxm:.10e}  {error:.10e}</br>".replace(" ","|")
-            if fxm == 0:
-                html+=f"{xm} es raiz</br>"
-            elif error < tolerance:
-                html+=f"{xm} es aproximacion a una raiz con una tolerancia: {tolerance}</br>"
-            else:
-                html+=f"Fracaso en {niter} iteracciones</br>"
-        else:
-            html+="El intervalo es inedacuado</br>"
+                html+="El intervalo es inedacuado</br>"
+        
+        except Exception as e:
+            if str(e) == 'math domain error':
+                return "</br></br>El método se detuvo porque se está evaluando un punto que no está en el dominio de la función</br>"
+            elif str(e) == 'division float':
+                return "</br></br>El método se detuvo por que se generó una división por cero al evaluar la funcion o la derivada en un punto</br>"
         
         return html
 
@@ -130,161 +143,191 @@ class NM:
         header = '|i|        xi       |     f(xi)      |        E       |'.replace(" ","*")
         html = f"</br>Newton</br></br>Tabla de resultados:</br>{header}</br>"
 
-        fx = f(x0)
-        dfx = df(x0)
+        
+        try:
 
-        count = 0
-        err = 0
-        err = tol + 1
+            fx = f(x0)
+            dfx = df(x0)
 
-        while (err > tol) and (fx != 0) and (dfx != 0) and (count < niter):
-            if err == tol + 1:
-                html+=f" {count}  {x0:.10e} {fx:.10e}|----------------</br>".replace(" ","|")
-            else:
-                if count < 10:
-                    html+=f" {count}  {x0:.10e} {fx:.10e} {err:.10e}</br>".replace(" ","|")
+            count = 0
+            err = 0
+            err = tol + 1
+            while (err > tol) and (fx != 0) and (dfx != 0) and (count < niter):
+                if err == tol + 1:
+                    html+=f" {count}  {x0:.10e} {fx:.10e}|----------------</br>".replace(" ","|")
                 else:
-                    html+=f" {count} {x0:.10e} {fx:.10e} {err:.10e}</br>".replace(" ","|")
-            x1 = x0 - (fx/dfx)
-            fx = f(x1)
-            dfx = df(x1)
-            err = abs(x1 - x0)
-            x0 = x1
-            count += 1
-        if count < 10:
-            html+=f" {count}  {x0:.10e} {fx:.10e} {err:.10e}</br>".replace(" ","|")
-        else:
-            html+=f" {count} {x0:.10e} {fx:.10e} {err:.10e}</br>".replace(" ","|")
-        if fx == 0:
-            html+=f"{x0} es raiz</br>"
-        elif err < tol:
-            html+=f"{x1} es aproximacion a una raiz con una tolerancia:{tol}</br>"
-        elif dfx == 0:
-            html+=f"{x1} es una posible raiz multiple</br>"
-        else:
-            html+="Fracaso en " + niter + " iteraciones</br>"
+                    if count < 10:
+                        html+=f" {count}  {x0:.10e} {fx:.10e} {err:.10e}</br>".replace(" ","|")
+                    else:
+                        html+=f" {count} {x0:.10e} {fx:.10e} {err:.10e}</br>".replace(" ","|")
+                x1 = x0 - (fx/dfx)
+                fx = f(x1)
+                dfx = df(x1)
+                err = abs(x1 - x0)
+                x0 = x1
+                count += 1
+            if count < 10:
+                html+=f" {count}  {x0:.10e} {fx:.10e} {err:.10e}</br>".replace(" ","|")
+            else:
+                html+=f" {count} {x0:.10e} {fx:.10e} {err:.10e}</br>".replace(" ","|")
+            if fx == 0:
+                html+=f"{x0} es raiz</br>"
+            elif err < tol:
+                html+=f"{x1} es aproximacion a una raiz con una tolerancia:{tol}</br>"
+            elif dfx == 0:
+                html+=f"{x1} es una posible raiz multiple</br>"
+            else:
+                html+="Fracaso en " + niter + " iteraciones</br>"
+        
+        except Exception as e:
+            if str(e) == 'math domain error':
+                return "</br></br>El método se detuvo porque se está evaluando un punto que no está en el dominio de la función</br>"
+            elif str(e) == 'division float':
+                return "</br></br>El método se detuvo por que se generó una división por cero al evaluar la funcion o la derivada en un punto</br>"
         
         return html
 
     def puntoFijo(self,f,g,tole,xa,niter):
-        xn = g(xa)
-        fx = f(xn)
-        gx = g(xa)
-        count = 0
-
-        err = tole + 1
-
-        header = '|i|        xi        |     g(xi)       |      f(xi)      |        E       |'.replace(" ","*")
-        html = f"</br>Punto Fijo</br></br>Tabla de resultados:</br>{header}</br>"
-
-        while (fx != 0) and (err > tole) and (count < niter):
-            if err == tole + 1:
-                html += f" {count}  {xa:.10e} {gx:.10e} {fx:.10e}|----------------</br>".replace(" ","|")
-            else:
-                if count < 10:
-                    html += f" {count}  {xa:.10e} {gx:.10e} {fx:.10e} {err:.10e}</br>".replace(" ","|")
-                else:
-                    html += f" {count} {xa:.10e} {gx:.10e} {fx:.10e} {err:.10e}</br>".replace(" ","|")
+        try:
             xn = g(xa)
             fx = f(xn)
-            err = abs(xn - xa)
-            xa = xn
-            count += 1
             gx = g(xa)
-        if count < 10:
-            html += f" {count}  {xa:.10e} {gx:.10e} {fx:.10e} {err:.10e}</br>".replace(" ","|")
-        else:
-            html += f" {count} {xa:.10e} {gx:.10e} {fx:.10e} {err:.10e}</br>".replace(" ","|")
-        if fx == 0:
-            html += f"{xa} es raiz"
-        elif err < tole:
-            html += f"{xa} es aproximacion con una tolerancia: {tole}"
-        else:
-            html += f"El metodo fracaso en {niter} iteracciones"
+            count = 0
+
+            err = tole + 1
+
+            header = '|i|        xi        |     g(xi)       |      f(xi)      |        E       |'.replace(" ","*")
+            html = f"</br>Punto Fijo</br></br>Tabla de resultados:</br>{header}</br>"
+
+            while (fx != 0) and (err > tole) and (count < niter):
+                if err == tole + 1:
+                    html += f" {count}  {xa:.10e} {gx:.10e} {fx:.10e}|----------------</br>".replace(" ","|")
+                else:
+                    if count < 10:
+                        html += f" {count}  {xa:.10e} {gx:.10e} {fx:.10e} {err:.10e}</br>".replace(" ","|")
+                    else:
+                        html += f" {count} {xa:.10e} {gx:.10e} {fx:.10e} {err:.10e}</br>".replace(" ","|")
+                xn = g(xa)
+                fx = f(xn)
+                err = abs(xn - xa)
+                xa = xn
+                count += 1
+                gx = g(xa)
+            if count < 10:
+                html += f" {count}  {xa:.10e} {gx:.10e} {fx:.10e} {err:.10e}</br>".replace(" ","|")
+            else:
+                html += f" {count} {xa:.10e} {gx:.10e} {fx:.10e} {err:.10e}</br>".replace(" ","|")
+            if fx == 0:
+                html += f"{xa} es raiz"
+            elif err < tole:
+                html += f"{xa} es aproximacion con una tolerancia: {tole}"
+            else:
+                html += f"El metodo fracaso en {niter} iteracciones"
+        
+        except Exception as e:
+            if str(e) == 'math domain error':
+                return "</br></br>El método se detuvo porque se está evaluando un punto que no está en el dominio de la función</br>"
+            elif str(e) == 'division float':
+                return "</br></br>El método se detuvo por que se generó una división por cero al evaluar la funcion en f o en g</br>"
 
         return html
 
     def secante(self,f,x0,x1,tol,niter):
-        header = '|i|        xi       |     f(xi)      |        E       |'.replace(" ","*")
-        html = f"</br>Secante</br></br>Tabla de resultados:</br>{header}</br>"
-        fx0 = f(x0)
+        try:
+            header = '|i|        xi       |     f(xi)      |        E       |'.replace(" ","*")
+            html = f"</br>Secante</br></br>Tabla de resultados:</br>{header}</br>"
+            fx0 = f(x0)
 
-        if fx0 == 0:
-            html+= f"{x0} es raiz: "
-        else:
-            fx1 = f(x1)
-            cont = 0
-            err = tol + 1
-            err_aux = tol + 1
-            den = fx1 - fx0
-            while err_aux > tol and fx1 != 0 and den != 0 and cont < niter:
-                if err_aux == tol + 1:
-                    html+= f" {cont}  {x0:.10e} {fx0:.10e}|----------------</br>".replace(" ","|")
-                else:
-                    if cont < 10:
-                        html+=f" {cont}  {x0:.10e} {fx0:.10e} {err_aux:.10e}</br>".replace(" ","|")
-                    else:
-                        html+=f" {cont} {x0:.10e} {fx0:.10e} {err_aux:.10e}</br>".replace(" ","|")
-                err_aux = err
-                x2 = x1 - fx1 * (x1 - x0)/den
-                err = abs(x2 - x1)
-                x0 = x1
-                fx0 = fx1
-                x1 = x2
+            if fx0 == 0:
+                html+= f"{x0} es raiz: "
+            else:
                 fx1 = f(x1)
+                cont = 0
+                err = tol + 1
+                err_aux = tol + 1
                 den = fx1 - fx0
-                cont += 1
-            if cont < 10:
-                html+=f" {cont}  {x0:.10e} {fx0:.10e} {err_aux:.10e}</br>".replace(" ","|")
-            else:
-                html+=f" {cont} {x0:.10e} {fx0:.10e} {err_aux:.10e}</br>".replace(" ","|")
-            if fx1 == 0:
-                html+=f"{x1} es raiz</br>"
-            elif err < tol:
-                html+=f"{x1} es aproximacion a una raiz con una tolerancia: {tol}</br>"
-            elif den == 0:
-                html+=f"Hay una posible raiz multiple</br>"
-            else:
-                html+=f"Fracasó en {niter} iteraciones</br>"
+                while err_aux > tol and fx1 != 0 and den != 0 and cont < niter:
+                    if err_aux == tol + 1:
+                        html+= f" {cont}  {x0:.10e} {fx0:.10e}|----------------</br>".replace(" ","|")
+                    else:
+                        if cont < 10:
+                            html+=f" {cont}  {x0:.10e} {fx0:.10e} {err_aux:.10e}</br>".replace(" ","|")
+                        else:
+                            html+=f" {cont} {x0:.10e} {fx0:.10e} {err_aux:.10e}</br>".replace(" ","|")
+                    err_aux = err
+                    x2 = x1 - fx1 * (x1 - x0)/den
+                    err = abs(x2 - x1)
+                    x0 = x1
+                    fx0 = fx1
+                    x1 = x2
+                    fx1 = f(x1)
+                    den = fx1 - fx0
+                    cont += 1
+                if cont < 10:
+                    html+=f" {cont}  {x0:.10e} {fx0:.10e} {err_aux:.10e}</br>".replace(" ","|")
+                else:
+                    html+=f" {cont} {x0:.10e} {fx0:.10e} {err_aux:.10e}</br>".replace(" ","|")
+                if fx1 == 0:
+                    html+=f"{x1} es raiz</br>"
+                elif err < tol:
+                    html+=f"{x1} es aproximacion a una raiz con una tolerancia: {tol}</br>"
+                elif den == 0:
+                    html+=f"Hay una posible raiz multiple</br>"
+                else:
+                    html+=f"Fracasó en {niter} iteraciones</br>"
+
+        except Exception as e:
+            if str(e) == 'math domain error':
+                return "</br></br>El método se detuvo porque se está evaluando un punto que no está en el dominio de la función</br>"
+            elif str(e) == 'division float':
+                return "</br></br>El método se detuvo por que se generó una división por cero al evaluar la funcion/br>"
+
         return html
 
     def raicesMultiples(self,f,df,df2,tol,x0,niter):
-        fx = f(x0)
-        dfx = df(x0)
-        dfx2 = df2(x0)
-        cont = 0
-        err = 0
-        err = tol + 1
-        header = '|i|        xi       |     f(xi)      |        E       |'.replace(" ","*")
-        html = f"</br>Raices Multiples</br></br>Tabla de resultados:</br>{header}</br>"
+        try:
+            fx = f(x0)
+            dfx = df(x0)
+            dfx2 = df2(x0)
+            cont = 0
+            err = 0
+            err = tol + 1
+            header = '|i|        xi       |     f(xi)      |        E       |'.replace(" ","*")
+            html = f"</br>Raices Multiples</br></br>Tabla de resultados:</br>{header}</br>"
 
-        while (err > tol) and (fx != 0) and (dfx != 0) and (dfx2 != 0) and (cont < niter):
-            if err == tol + 1:
-                html+= f" {cont}  {x0:.10e} {fx:.10e}|-----------------</br>".replace(" ","|")
-            else:
-                if cont < 10:
-                    html+=f" {cont}  {x0:.10e} {fx:.10e} {err:.10e}</br>".replace(" ","|")
+            while (err > tol) and (fx != 0) and (dfx != 0) and (dfx2 != 0) and (cont < niter):
+                if err == tol + 1:
+                    html+= f" {cont}  {x0:.10e} {fx:.10e}|-----------------</br>".replace(" ","|")
                 else:
-                    html+=f" {cont} {x0:.10e} {fx:.10e} {err:.10e}</br>".replace(" ","|")
-            x1 = x0 - ((fx*dfx)/((dfx)**2-(fx*dfx2)))
-            fx = f(x1)
-            dfx = df(x1)
-            dfx2 = df2(x1)
-            err = abs(x1 - x0)
-            x0 = x1
-            cont += 1
-        if cont < 10:
-            html+=f" {cont}  {x0:.10e} {fx:.10e} {err:.10e}</br>".replace(" ","|")
-        else:
-            html+=f" {cont} {x0:.10e} {fx:.10e} {err:.10e}</br>".replace(" ","|")
-        if fx == 0:
-            html+=f"{x0} es raiz</br>"
-        elif err < tol:
-            html+=f"{x1} es aproximacion a una raiz con una tolerancia: {tol}</br>"
-        elif dfx == 0 or dfx2 == 0:
-            html+=f"{x1} es una posible raiz multiple</br>"
-        else:
-            html+=f"Fracaso en {niter} iteraciones</br>"
+                    if cont < 10:
+                        html+=f" {cont}  {x0:.10e} {fx:.10e} {err:.10e}</br>".replace(" ","|")
+                    else:
+                        html+=f" {cont} {x0:.10e} {fx:.10e} {err:.10e}</br>".replace(" ","|")
+                x1 = x0 - ((fx*dfx)/((dfx)**2-(fx*dfx2)))
+                fx = f(x1)
+                dfx = df(x1)
+                dfx2 = df2(x1)
+                err = abs(x1 - x0)
+                x0 = x1
+                cont += 1
+            if cont < 10:
+                html+=f" {cont}  {x0:.10e} {fx:.10e} {err:.10e}</br>".replace(" ","|")
+            else:
+                html+=f" {cont} {x0:.10e} {fx:.10e} {err:.10e}</br>".replace(" ","|")
+            if fx == 0:
+                html+=f"{x0} es raiz</br>"
+            elif err < tol:
+                html+=f"{x1} es aproximacion a una raiz con una tolerancia: {tol}</br>"
+            elif dfx == 0 or dfx2 == 0:
+                html+=f"{x1} es una posible raiz multiple</br>"
+            else:
+                html+=f"Fracaso en {niter} iteraciones</br>"
+        
+        except Exception as e:
+            if str(e) == 'math domain error':
+                return "</br></br>El método se detuvo porque se está evaluando un punto que no está en el dominio de la función</br>"
+            elif str(e) == 'division float':
+                return "</br></br>El método se detuvo por que se generó una división por cero al evaluar la funcion o las derivadas en un punto</br>"
         
         return html
 
@@ -672,6 +715,8 @@ class NM:
         T = [[0 for i in range(len(A))] for j in range(len(A))]
         for i in range(len(A)):
             coef = 0
+            if A[i][i] == 0:
+                return html+"</br>Existe un 0 en la diagonal, en la posicion {i+1},{i+1} lo que genera una división por cero cuando se desea contruir la matriz C</br>"
             C.append((1/A[i][i])*b[i])
             coef = -(1/A[i][i])
             for j in range(len(A)):
@@ -723,7 +768,7 @@ class NM:
             from math import sqrt
             return sqrt(result)
 
-        while disp > Tol and count < Nmax:
+        while disp > Tol and count <= Nmax:
             x1 = calcularNuevoJacobi(x0)
             result = [f"{i:.10e}" for i in x0]
             if count <= 9:
@@ -843,7 +888,10 @@ class NM:
         H = [[0 if i >= j else -A[i][j] for i in range(len(A))] for j in range(len(A))]
         T = [[0 if i < j else A[i][j] for i in range(len(A))] for j in range(len(A))]
         T = np.array(T)
-        C = list((np.linalg.inv(T)).dot(np.array(b)))
+        try:
+            C = list((np.linalg.inv(T)).dot(np.array(b)))
+        except Exception as e:
+            return html + "</br>La matriz C construida es singular, lo que implica el método se detenga</br>"
         T = list((np.linalg.inv(T)).dot(np.array(H)))
 
         html += "</br>T:</br>"
@@ -936,13 +984,40 @@ class NM:
             A.append(data)
         
         Ab, marcas, b = self.eliminacionGaussianaConPivoteo(A, b, len(A),html,"")
+
+        if "diagonal" in html:
+            return html
         x = self.sustitucionRegresiva(Ab, len(A))
-        x = self.reordenar(x, marcas)
+        infinit = False
+        if type(x) ==  str:
+            infinit = True    
+            html += x
+            x = self.infinitasSoluciones(Ab)
+            html+="</br>En los datos ingresados hay dos valores x iguales, aproximaremos a un polinomio con la matriz generada</br>"
+            html+="</br>Ya que el sistema es compatible indeterminado, tiene infinitas soluciones y se puede respresentar con:</br></br>x:</br>"
+
+            x = self.reordenar(x, marcas)
+
+            for i in x:
+                html+=f"{i}</br></br>"
+            
+            html += "</br>con t = 0</br>x:</br>"
+            
+            for i in x:
+                fun = eval(f"lambda t:{i}")
+                result = fun(0)
+                html+=f"{result:.10f}</br>"
+            
+            for i in range(len(x)):
+                fun = eval(f"lambda t:{x[i]}")
+                result = fun(0)
+                x[i] = result
+
 
         html += "</br>Coeficientes del polinomio:</br></br>"
         result = ""
         for i in x:
-            result += f"{float(i):.10e} "
+            result += f"{float(i):.10e}</br> "
         html+=result+"</br>"
 
         result = ""
@@ -960,8 +1035,10 @@ class NM:
                 else:
                     result += str(i)
 
-        html += f"</br>Polinomio:</br></br>{result}</br>"
-        
+        if infinit:
+            html += f"</br>Aproximación a un polinomio:</br></br>{result}</br>"
+        else:
+            html += f"</br>Polinomio:</br></br>{result}</br>"
         return html
 
     def interpolanteNewtonSin(self,xs,ys):
@@ -1000,7 +1077,7 @@ class NM:
 
         for i in b:
             html += f"{i}</br>"
-        html += f"</br>Polinomio:</br></br>{result}"
+        html += f"</br>Polinomio:</br></br>{result}</br>"
 
         return html
 
@@ -1017,13 +1094,19 @@ class NM:
             index = 1
             for j in range(2,i+2):
                 if (xs[i-index] - xs[i]) == 0:
-                    det = "</br>se han ingresado dos puntos x iguales, esto genera que a la hora de buscar los polinomios exista una división por 0 y debido a esto el método no termina de ejecutarse</br>"
+                    det = "</br>Se han ingresado dos puntos x iguales, esto genera que a la hora de buscar los polinomios exista una división por 0 y debido a esto el método no termina de ejecutarse</br>"
                     break
                 row.append((table[i-1][j-1] - row[len(row)-1])
                             /
                             (xs[i-index] - xs[i]))
                 index+=1
+            if det != "":
+                break
             table.append(row)
+
+        if det != "":
+            html += det
+            return html
 
         html+="</br>Tabla de diferencias divididas:</br></br>"
         size = len(table)
@@ -1035,10 +1118,6 @@ class NM:
                 result+="------------------"
             size -= 1
             html+=result+"</br>"
-
-        if det != "":
-            html += det
-            return html
 
         result = ""
         html+="</br>Coeficientes del polinomio:</br></br>"
@@ -1053,7 +1132,7 @@ class NM:
 
         result = result[:len(result)-1]
 
-        html+=f"Polinomio:</br></br>{result}" 
+        html+=f"Polinomio:</br></br>{result}</br>" 
 
         return html
 
@@ -1100,9 +1179,32 @@ class NM:
         a, b = self.makeMatrix(xs,b,1)
         ab, marcas, d = self.eliminacionGaussianaConPivoteo(a, b, len(a),"","")
         x = self.sustitucionRegresiva(ab, len(ab))
-        x = self.reordenar(x,marcas)
+        html="</br>Trazadores lineales</br>"
+        if type(x) ==  str:    
+            html += x
+            x = self.infinitasSoluciones(ab)
+            html+="</br>En los datos ingresados hay dos valores x iguales, aproximaremos unos trazadores con la matriz generada</br>"
+            html+="</br>Ya que el sistema es compatible indeterminado, tiene infinitas soluciones y se puede respresentar con:</br></br>x:</br>"
 
-        html="</br>Trazadores lineales</br></br>Coeficientes:</br></br>"
+            x = self.reordenar(x, marcas)
+
+            for i in x:
+                html+=f"{i}</br></br>"
+            
+            html += "</br>con t = 0</br>x:</br>"
+            
+            for i in x:
+                fun = eval(f"lambda t:{i}")
+                result = fun(0)
+                html+=f"{result:.10f}</br>"
+            
+            for i in range(len(x)):
+                fun = eval(f"lambda t:{x[i]}")
+                result = fun(0)
+                x[i] = result
+            
+        html += "</br>Coeficientes del polinomio:</br></br>"
+
         result = ""
         index = 0
         for i in x:
@@ -1123,9 +1225,31 @@ class NM:
         a, b = self.makeMatrix(xs,b,2)
         ab, marcas, d = self.eliminacionGaussianaConPivoteo(a, b, len(a),"","")
         x = self.sustitucionRegresiva(ab, len(ab))
-        x = self.reordenar(x,marcas)
+        html="</br>Trazadores cuadraticos</br>"
+        if type(x) ==  str:    
+            html += x
+            x = self.infinitasSoluciones(ab)
+            html+="</br>En los datos ingresados hay dos valores x iguales, aproximaremos unos trazadores con la matriz generada</br>"
+            html+="</br>Ya que el sistema es compatible indeterminado, tiene infinitas soluciones y se puede respresentar con:</br></br>x:</br>"
 
-        html="</br>Trazadores cuadraticos</br></br>Coeficientes:</br></br>"
+            x = self.reordenar(x, marcas)
+
+            for i in x:
+                html+=f"{i}</br></br>"
+            
+            html += "</br>con t = 0</br>x:</br>"
+            
+            for i in x:
+                fun = eval(f"lambda t:{i}")
+                result = fun(0)
+                html+=f"{result:.10f}</br>"
+            
+            for i in range(len(x)):
+                fun = eval(f"lambda t:{x[i]}")
+                result = fun(0)
+                x[i] = result
+        
+        html+= "</br></br>Coeficientes:</br></br>"
         result = ""
         index = 0
         for i in x:
@@ -1146,9 +1270,32 @@ class NM:
         a, b = self.makeMatrix(xs,b,3)
         ab, marcas, d = self.eliminacionGaussianaConPivoteo(a, b, len(a),"","")
         x = self.sustitucionRegresiva(ab, len(ab))
-        x = self.reordenar(x,marcas)
+        html="</br>Trazadores cubicos</br>"
 
-        html="</br>Trazadores cubicos</br></br>Coeficientes:</br></br>"
+        if type(x) ==  str:    
+            html += x
+            x = self.infinitasSoluciones(ab)
+            html+="</br>En los datos ingresados hay dos valores x iguales, aproximaremos unos trazadores con la matriz generada</br>"
+            html+="</br>Ya que el sistema es compatible indeterminado, tiene infinitas soluciones y se puede respresentar con:</br></br>x:</br>"
+
+            x = self.reordenar(x, marcas)
+
+            for i in x:
+                html+=f"{i}</br></br>"
+            
+            html += "</br>con t = 0</br>x:</br>"
+            
+            for i in x:
+                fun = eval(f"lambda t:{i}")
+                result = fun(0)
+                html+=f"{result:.10f}</br>"
+            
+            for i in range(len(x)):
+                fun = eval(f"lambda t:{x[i]}")
+                result = fun(0)
+                x[i] = result
+        
+        html+= "</br></br>Coeficientes:</br></br>"
         result = ""
         index = 0
         for i in x:
@@ -1196,7 +1343,6 @@ class NM:
     def formaMatrizAumentada(self,A,b):
         import numpy as np
         n = len(A[0])
-        print(A)
         det =  np.linalg.det(np.array(A))
 
         for i in A:
@@ -1591,7 +1737,7 @@ class NM:
                     if x[i] >= 0.0:
                         result += "+"+str(x[i])+"*"+"x"
                     else:
-                        result += str(x[i])+"x"
+                        result += str(x[i])+"*"+"x"
                 else:
                     if x[i] >= 0.0:
                         result += "+"+str(x[i])+";"
@@ -1605,12 +1751,12 @@ class NM:
                     if x[i] >= 0.0:
                         result += "+"+str(x[i])+"*"+"x**2"
                     else:
-                        result += str(x[i])+"x**2"
+                        result += str(x[i])+"*"+"x**2"
                 elif j == 1:
                     if x[i] >= 0.0:
                         result += "+"+str(x[i])+"*"+"x"
                     else:
-                        result += str(x[i])+"x"
+                        result += str(x[i])+"*"+"x"
                 else:
                     if x[i] >= 0.0:
                         result += "+"+str(x[i])+";"
@@ -1625,12 +1771,12 @@ class NM:
                     if x[i] >= 0.0:
                         result += "+"+str(x[i])+"*"+"x**3"
                     else:
-                        result += str(x[i])+"x**3"
+                        result += str(x[i])+"*"+"x**3"
                 elif j == 1:
                     if x[i] >= 0.0:
                         result += "+"+str(x[i])+"*"+"x**2"
                     else:
-                        result += str(x[i])+"x**2"
+                        result += str(x[i])+"*"+"x**2"
                 elif j == 2:
                     if x[i] >= 0.0:
                         result += "+"+str(x[i])+"*"+"x"

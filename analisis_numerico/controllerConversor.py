@@ -1,7 +1,7 @@
 class ControllerConversor:
     def __init__(self, result=False):
         self.__result = result
-        self.__css = "black style"
+        self.__css = "barona style"
     
     def setCSS(self, css):
         self.__css = css
