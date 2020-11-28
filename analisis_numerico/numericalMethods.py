@@ -736,6 +736,7 @@ class NM:
 
         val, ne =  np.linalg.eig(T) # T es la matriz
         sr = max(abs(val))
+        
         html += f"</br>Radio espectral:</br>{sr}</br></br>"
         if sr < 1:
             html += f"El sistema converge a la solucion unica x=Tx + c ya que p(T) < 1</br></br>"
@@ -804,8 +805,15 @@ class NM:
         H = [[0 if i >= j else -A[i][j] for i in range(len(A))] for j in range(len(A))]
         T = [[0 if i < j else A[i][j] for i in range(len(A))] for j in range(len(A))]
         T = np.array(T)
-        C = list((np.linalg.inv(T)).dot(np.array(b)))
-        T = list((np.linalg.inv(T)).dot(np.array(H)))
+        try:
+            C = list((np.linalg.inv(T)).dot(np.array(b)))
+        except:
+            return html + "</br>La matriz C construida es singular, lo que implica el método se detenga</br>"
+
+        try:
+            T = list((np.linalg.inv(T)).dot(np.array(H)))
+        except:
+            return html + "</br>La matriz T construida es singular, lo que implica el método se detenga</br>"
 
         html += "</br>T:</br>"
         for i in T:
@@ -890,9 +898,13 @@ class NM:
         T = np.array(T)
         try:
             C = list((np.linalg.inv(T)).dot(np.array(b)))
-        except Exception as e:
+        except:
             return html + "</br>La matriz C construida es singular, lo que implica el método se detenga</br>"
-        T = list((np.linalg.inv(T)).dot(np.array(H)))
+
+        try:
+            T = list((np.linalg.inv(T)).dot(np.array(H)))
+        except:
+            return html + "</br>La matriz T construida es singular, lo que implica el método se detenga</br>"
 
         html += "</br>T:</br>"
         for i in T:
