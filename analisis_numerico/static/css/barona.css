@@ -196,14 +196,13 @@ label {
 
 .ingreso {
     color: #ff9694;
-    ;
     padding: 20px 50px;
     margin-top: 50px;
 }
 
 .text-box {
+    color: white;
     background-color: #ff9694;
-    ;
     border-radius: 5px;
     border: 3px solid #ff514f;
 }
@@ -218,7 +217,7 @@ label {
 }
 
 .boton {
-    color: black;
+    color: white;
     font-weight: 700;
     text-decoration: none;
     font-size: 1.8rem;
