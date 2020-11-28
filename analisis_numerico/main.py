@@ -50,7 +50,7 @@ def index():
 def guie():
    if request.method == "POST":
       cc.setCSS(request.form['css'])
-   return render_template('guie.jinja')
+   return render_template('guie.jinja',cc=cc)
 
 @app.route('/numericalMethods', methods=["GET", "POST"])
 def numericalMethods():
@@ -100,11 +100,11 @@ def conversor():
 
 @app.route('/user/<name>')
 def user(name):
-   return render_template('user.jinja', name=name)
+   return render_template('user.jinja', cc=cc, name=name)
 
 @app.errorhandler(404)
 def page_not_found(e):
-   return render_template('404.jinja',e=e), 404
+   return render_template('404.jinja', cc=cc,e=e), 404
 
 
 #snippet for update static files in web debugging
