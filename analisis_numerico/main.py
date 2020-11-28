@@ -39,12 +39,17 @@ nmc = ControllerNM(NM())
 mc = ControllerMatrix()
 cc  = ControllerConversor()
 
-@app.route('/')
+@app.route('/', methods=["GET", "POST"])
 def index():
-   return render_template('index.jinja')
+   if request.method == "POST":
+      cc.setCSS(request.form['css'])
+   return render_template('index.jinja',cc=cc)
 
-@app.route('/guie')
+
+@app.route('/guie', methods=["GET", "POST"])
 def guie():
+   if request.method == "POST":
+      cc.setCSS(request.form['css'])
    return render_template('guie.jinja')
 
 @app.route('/numericalMethods', methods=["GET", "POST"])
@@ -66,7 +71,7 @@ def numericalMethods():
    else:
       nmc.setMethod(False)
       nmc.setResult(False)
-   return render_template('numericalMethods.jinja', nmc=nmc)
+   return render_template('numericalMethods.jinja', nmc=nmc,cc=cc)
 
 @app.route('/makeMatrix', methods=["GET", "POST"])
 def makeMatrix():
@@ -81,7 +86,7 @@ def makeMatrix():
    else:
       mc.setN(False)
       mc.setResult(False)
-   return render_template('makeMatrix.jinja', mc=mc,data=data)
+   return render_template('makeMatrix.jinja', mc=mc,data=data,cc=cc)
 
 @app.route('/conversor', methods=["GET", "POST"])
 def conversor():

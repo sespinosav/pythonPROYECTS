@@ -1,6 +1,13 @@
 class ControllerConversor:
     def __init__(self, result=False):
         self.__result = result
+        self.__css = "black style"
+    
+    def setCSS(self, css):
+        self.__css = css
+    
+    def getCSS(self):
+        return self.__css
 
     def setResult(self,result):
         self.__result = result
