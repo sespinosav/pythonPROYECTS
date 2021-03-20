@@ -12,7 +12,7 @@ Web application for numerical methods and converter numbers until 10 bases, made
     
 ## Setup for web app
 
-Or clone git in https://github.com/sespinosav/pythonPROYECTS.git 
+You can see this in ejecution in https://numericalapp.herokuapp.com/ Or clone git in https://github.com/sespinosav/pythonPROYECTS.git 
 
 $ git clone https://github.com/sespinosav/pythonPROYECTS.git 
 
